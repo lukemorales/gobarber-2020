@@ -11,16 +11,23 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn test:staged --bail"
     }
   },
   "lint-staged": {
-    "**/*.ts?(x)": "eslint **/**/src/**/* --max-warnings=0 --fix"
+    "**/*.ts?(x)": "eslint **/**/src/ --max-warnings=0 --fix"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "yarn test --watch",
+    "test:staged": "cross-env CI=true yarn test --findRelatedTests"
   },
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/core": "^11.0.0",
+    "@types/jest": "^26.0.13",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "commitlint-config-gitmoji": "^1.0.1",
@@ -31,6 +38,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
     "husky": "^4.3.0",
+    "jest": "^26.4.2",
     "lint-staged": "^10.3.0"
   }
 }
