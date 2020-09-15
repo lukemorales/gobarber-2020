@@ -21,7 +21,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "yarn test --watch",
-    "test:staged": "cross-env CI=true yarn test --findRelatedTests"
+    "test:staged": "yarn test --findRelatedTests"
   },
   "license": "MIT",
   "devDependencies": {
