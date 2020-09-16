@@ -21,7 +21,13 @@
         "prettier",
         "@typescript-eslint"
     ],
+    "settings": {
+      "import/resolver": {
+        "typescript": {}
+      }
+    },
     "rules": {
-      "prettier/prettier": "error"
+      "prettier/prettier": "error",
+      "import/extensions": [ "error", "ignorePackages", { "ts": "never" } ]
     }
 }
