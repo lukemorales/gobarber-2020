@@ -15,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "**/*.ts?(x)": "eslint **/**/src/ --max-warnings=0 --fix"
+    "{clients,server}/**/src/**/*.ts?(x)": "eslint --max-warnings=0 --fix"
   },
   "scripts": {
     "test": "jest",
