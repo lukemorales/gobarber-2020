@@ -6,6 +6,8 @@
     },
     "extends": [
         "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
         "airbnb"
     ],
@@ -28,6 +30,13 @@
     },
     "rules": {
       "prettier/prettier": "error",
-      "import/extensions": [ "error", "ignorePackages", { "ts": "never" } ]
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "ts": "never",
+          "tsx": "never"
+        }
+      ]
     }
 }
