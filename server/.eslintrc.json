@@ -35,6 +35,7 @@
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
