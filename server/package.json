@@ -6,13 +6,17 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsnd --inspect --respawn --transpile-only src/server.ts",
-    "start": "node dist/server"
+    "start": "node dist/server",
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
     "multer": "^1.4.2",
+    "pg": "^8.3.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.26",
     "uuidv4": "^6.2.3"
   },
   "devDependencies": {

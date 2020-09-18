@@ -6,6 +6,10 @@
     "packages": [
       "clients/*",
       "server"
+    ],
+    "nohoist": [
+      "**/typeorm/**",
+      "**/typeorm"
     ]
   },
   "husky": {
