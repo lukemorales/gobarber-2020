@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsnd --inspect --respawn --transpile-only src/server.ts",
-    "start": "node dist/server"
+    "start": "node dist/server",
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
