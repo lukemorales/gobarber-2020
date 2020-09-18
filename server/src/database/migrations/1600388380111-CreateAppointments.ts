@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { timestampColumns } from '../utils';
 
 export const appointmentsTable = 'appointments';
 
@@ -19,13 +20,12 @@ export default class CreateAppointments1600388380111
           {
             name: 'provider',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'date',
             type: 'timestamp with time zone',
-            isNullable: false,
           },
+          ...timestampColumns,
         ],
       }),
     );
