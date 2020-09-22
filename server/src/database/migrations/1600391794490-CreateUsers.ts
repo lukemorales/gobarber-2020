@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { timestampColumns } from '../utils';
+import { idColumn, timestampColumns } from '../utils';
 
 export const usersTable = 'users';
 
@@ -9,13 +9,7 @@ export class CreateUsers1600391794490 implements MigrationInterface {
       new Table({
         name: usersTable,
         columns: [
-          {
-            name: 'id',
-            type: 'varchar',
-            isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
-          },
+          idColumn,
           {
             name: 'name',
             type: 'varchar',
