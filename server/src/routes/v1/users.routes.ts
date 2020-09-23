@@ -1,3 +1,4 @@
+import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
 import CreateUserService from '../../services/CreateUserService';
 
@@ -15,7 +16,7 @@ routes.post('/', async (request, response) => {
       password,
     });
 
-    return response.json(user);
+    return response.json(classToPlain(user));
   } catch (err) {
     return response.status(400).json({ message: err.message });
   }
