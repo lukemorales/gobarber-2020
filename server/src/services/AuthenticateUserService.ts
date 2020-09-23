@@ -2,13 +2,14 @@ import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import UsersRepository from '../repositories/UsersRepository';
+import authConfig from '../config/auth-config';
 
 interface Request {
   email: string;
   password: string;
 }
 
-class CreateSessionService {
+class AuthenticateUserService {
   public async execute(data: Request) {
     const { email, password } = data;
     const usersRepository = getCustomRepository(UsersRepository);
@@ -25,13 +26,15 @@ class CreateSessionService {
       throw new Error('Incorrect email/password combination.');
     }
 
-    const token = sign({}, '14278b965fe170c21512c991470b8fa6', {
+    const { jwt } = authConfig;
+
+    const token = sign({}, jwt.secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn: jwt.expiresIn,
     });
 
     return { user, token };
   }
 }
 
-export default CreateSessionService;
+export default AuthenticateUserService;

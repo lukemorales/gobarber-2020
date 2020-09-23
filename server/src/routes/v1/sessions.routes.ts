@@ -1,6 +1,6 @@
 import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
-import CreateSessionService from '../../services/CreateSessionService';
+import AuthenticateUserService from '../../services/AuthenticateUserService';
 
 const routes = Router();
 
@@ -8,7 +8,7 @@ routes.post('/', async (request, response) => {
   try {
     const { email, password } = request.body;
 
-    const authenticateUser = new CreateSessionService();
+    const authenticateUser = new AuthenticateUserService();
 
     const session = await authenticateUser.execute({
       email,
