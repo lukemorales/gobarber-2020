@@ -10,12 +10,14 @@ routes.post('/', async (request, response) => {
 
     const authenticateUser = new CreateSessionService();
 
-    const { user } = await authenticateUser.execute({
+    const session = await authenticateUser.execute({
       email,
       password,
     });
 
-    return response.json(classToPlain({ user }));
+    const { user, token } = session;
+
+    return response.json(classToPlain({ user, token }));
   } catch (err) {
     return response.status(400).json({ message: err.message });
   }
