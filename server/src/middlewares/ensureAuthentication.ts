@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import { ExpressMiddleware } from '../@types/middleware';
 import authConfig from '../config/auth-config';
 
 interface TokenPayload {
@@ -8,11 +8,7 @@ interface TokenPayload {
   sub: string;
 }
 
-export default async (
-  request: Request,
-  response: Response,
-  next: NextFunction,
-) => {
+const ensureAuthentication: ExpressMiddleware = (request, response, next) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -37,3 +33,5 @@ export default async (
     );
   }
 };
+
+export default ensureAuthentication;
