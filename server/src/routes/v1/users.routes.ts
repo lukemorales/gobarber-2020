@@ -1,8 +1,13 @@
 import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
+import multer from 'multer';
+import uploadConfig from '../../config/upload-config';
+import ensureAuthentication from '../../middlewares/ensureAuthentication';
 import CreateUserService from '../../services/CreateUserService';
+import UpdateUserAvatarService from '../../services/UpdateUserAvatarService';
 
 const routes = Router();
+const upload = multer(uploadConfig);
 
 routes.post('/', async (request, response) => {
   try {
@@ -21,5 +26,26 @@ routes.post('/', async (request, response) => {
     return response.status(400).json({ message: err.message });
   }
 });
+
+routes.patch(
+  '/avatar',
+  ensureAuthentication,
+  upload.single('avatar'),
+  async (request, response) => {
+    try {
+      const { user, file } = request;
+      const updateUserAvatar = new UpdateUserAvatarService();
+
+      const updatedUser = await updateUserAvatar.execute({
+        user_id: user.id,
+        filename: file.filename,
+      });
+
+      return response.json(classToPlain(updatedUser));
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
+  },
+);
 
 export default routes;
