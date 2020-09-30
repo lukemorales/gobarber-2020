@@ -3,7 +3,7 @@ import { idColumn, timestampColumns } from '../utils';
 
 export const usersTableName = 'users';
 
-export class CreateUsers1600391794490 implements MigrationInterface {
+export default class CreateUsers1600391794490 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
