@@ -5,11 +5,13 @@ import bodyParser from 'body-parser';
 import routes from './routes';
 
 import './database';
+import uploadConfig from './config/upload-config';
 
 const app = express();
 
 app.use(bodyParser.json());
 
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 app.listen(

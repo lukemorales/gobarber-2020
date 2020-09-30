@@ -9,7 +9,7 @@ import { usersTableName } from './1600391794490-CreateUsers';
 
 const appointmentTableForeignKeyName = 'AppointmentProvider';
 
-export class AlterProviderFieldToProviderId1600814919838
+export default class AlterProviderFieldToProviderId1600814919838
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.changeColumn(
