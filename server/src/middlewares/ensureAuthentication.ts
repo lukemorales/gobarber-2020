@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { ExpressMiddleware } from '../@types/middleware';
 import authConfig from '../config/auth-config';
-import AppError from '../errors/AppError';
+import AppError from '../exceptions/AppError';
 
 interface TokenPayload {
   iat: number;

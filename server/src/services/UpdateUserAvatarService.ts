@@ -4,7 +4,7 @@ import fs from 'fs';
 import UsersRepository from '../repositories/UsersRepository';
 import uploadConfig from '../config/upload-config';
 
-import AppError from '../errors/AppError';
+import AppError from '../exceptions/AppError';
 
 interface Request {
   user_id: string;
