@@ -1,0 +1,8 @@
+{
+  "inFolder": "src/resources/locales/en",
+  "outFile": "src/@types/i18next.keys.ts",
+  "defaultNs": "translation",
+  "indent": 2,
+  "typeName": "TranslationKeys",
+  "quoteChar": "'"
+}
