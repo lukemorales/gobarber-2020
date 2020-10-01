@@ -4,14 +4,15 @@ import fs from 'fs';
 import UsersRepository from '../repositories/UsersRepository';
 import uploadConfig from '../config/upload-config';
 
-import AppError from '../exceptions/AppError';
+import AppException from '../exceptions/AppException';
+import BaseService from '../common/base.services';
 
 interface Request {
   user_id: string;
   filename: string;
 }
 
-class UpdateUserAvatarService {
+class UpdateUserAvatarService extends BaseService {
   public async execute(data: Request) {
     const { user_id, filename } = data;
     const usersRepository = getCustomRepository(UsersRepository);
@@ -19,7 +20,7 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new AppError('User is not registered.', 401);
+      throw new AppException(this.t('user_is_not_registered'), 401);
     }
 
     if (user.avatar) {

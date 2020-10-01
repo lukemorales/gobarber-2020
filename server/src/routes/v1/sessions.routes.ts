@@ -7,7 +7,7 @@ const routes = Router();
 routes.post('/', async (request, response) => {
   const { email, password } = request.body;
 
-  const authenticateUser = new AuthenticateUserService();
+  const authenticateUser = new AuthenticateUserService(request.t);
 
   const session = await authenticateUser.execute({
     email,

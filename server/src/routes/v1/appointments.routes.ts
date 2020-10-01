@@ -20,14 +20,14 @@ routes.post('/', async (request, response) => {
 
   const parsedDate = parseISO(date);
 
-  const createAppointment = new CreateAppointmentService();
+  const createAppointment = new CreateAppointmentService(request.t);
 
   const appointment = await createAppointment.execute({
     provider_id,
     date: parsedDate,
   });
 
-  return response.json(appointment);
+  return response.status(201).json(appointment);
 });
 
 export default routes;

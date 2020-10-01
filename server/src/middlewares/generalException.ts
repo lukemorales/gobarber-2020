@@ -1,5 +1,5 @@
 import { ExpressErrorMiddleware } from '../@types/middleware';
-import AppError from '../exceptions/AppError';
+import AppException from '../exceptions/AppException';
 
 const generalException: ExpressErrorMiddleware = (
   err,
@@ -7,18 +7,18 @@ const generalException: ExpressErrorMiddleware = (
   response,
   _,
 ) => {
-  if (err instanceof AppError) {
+  if (err instanceof AppException) {
     return response.status(err.status).json({
       status: err.status,
       message: err.message,
     });
   }
 
-  // eslint-disable-line no-console
+  console.error(err); // eslint-disable-line no-console
 
   return response.status(500).json({
     status: 500,
-    message: 'Internal Server Error',
+    message: request.t('internal_server_error'),
   });
 };
 
