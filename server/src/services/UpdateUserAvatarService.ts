@@ -4,6 +4,8 @@ import fs from 'fs';
 import UsersRepository from '../repositories/UsersRepository';
 import uploadConfig from '../config/upload-config';
 
+import AppError from '../errors/AppError';
+
 interface Request {
   user_id: string;
   filename: string;
@@ -17,7 +19,7 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('User is not registered.');
+      throw new AppError('User is not registered.', 401);
     }
 
     if (user.avatar) {

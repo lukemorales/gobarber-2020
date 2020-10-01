@@ -1,6 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { ExpressMiddleware } from '../@types/middleware';
 import authConfig from '../config/auth-config';
+import AppError from '../errors/AppError';
 
 interface TokenPayload {
   iat: number;
@@ -12,7 +13,7 @@ const ensureAuthentication: ExpressMiddleware = (request, response, next) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('Authentication token is missing');
+    throw new AppError('Authentication token is missing', 401);
   }
 
   const [, token] = authHeader.split(' ');
@@ -28,8 +29,9 @@ const ensureAuthentication: ExpressMiddleware = (request, response, next) => {
 
     return next();
   } catch (err) {
-    throw new Error(
+    throw new AppError(
       'Invalid authentication token, please log in a new session',
+      401,
     );
   }
 };
