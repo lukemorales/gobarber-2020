@@ -1,6 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
+import { StatusCodes } from 'http-status-codes';
 import UsersRepository from '../repositories/UsersRepository';
 import uploadConfig from '../config/upload-config';
 
@@ -20,7 +21,10 @@ class UpdateUserAvatarService extends BaseService {
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new AppException(this.t('user_is_not_registered'), 401);
+      throw new AppException(
+        this.t('user_is_not_registered'),
+        StatusCodes.UNAUTHORIZED,
+      );
     }
 
     if (user.avatar) {

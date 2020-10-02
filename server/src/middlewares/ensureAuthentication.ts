@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { verify } from 'jsonwebtoken';
 import { ExpressMiddleware } from '../@types/middleware';
 import authConfig from '../config/auth-config';
@@ -13,7 +14,10 @@ const ensureAuthentication: ExpressMiddleware = (request, _, next) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppException(request.t('missing_auth_token'), 401);
+    throw new AppException(
+      request.t('missing_auth_token'),
+      StatusCodes.UNAUTHORIZED,
+    );
   }
 
   const [, token] = authHeader.split(' ');
@@ -29,7 +33,10 @@ const ensureAuthentication: ExpressMiddleware = (request, _, next) => {
 
     return next();
   } catch (err) {
-    throw new AppException(request.t('invalid_token'), 401);
+    throw new AppException(
+      request.t('invalid_token'),
+      StatusCodes.UNAUTHORIZED,
+    );
   }
 };
 

@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import { StatusCodes } from 'http-status-codes';
 import UsersRepository from '../repositories/UsersRepository';
 import AppException from '../exceptions/AppException';
 import BaseService from '../common/base.services';
@@ -18,7 +19,10 @@ class CreateUserService extends BaseService {
     const userExists = await usersRepository.exists(email);
 
     if (userExists) {
-      throw new AppException(this.t('email_already_registered'), 409);
+      throw new AppException(
+        this.t('email_already_registered'),
+        StatusCodes.CONFLICT,
+      );
     }
 
     const hashedPassword = await hash(password, 8);
