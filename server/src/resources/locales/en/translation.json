@@ -1,0 +1,9 @@
+{
+  "missing_auth_token" : "Authentication token is missing.",
+  "invalid_token" : "Invalid authentication token, please log in a new session.",
+  "internal_server_error": "Internal Server Error",
+  "incorrect_credentials": "Incorrect credentials, try again.",
+  "email_already_registered": "This email is already registered.",
+  "user_is_not_registered": "User is not registered.",
+  "appointment_already_booked": "This appointment is already booked."
+}

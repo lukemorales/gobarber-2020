@@ -1,13 +1,16 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
+import { StatusCodes } from 'http-status-codes';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import AppException from '../exceptions/AppException';
+import BaseService from '../common/base.services';
 
 interface Request {
   provider_id: string;
   date: Date;
 }
 
-class CreateAppointmentService {
+class CreateAppointmentService extends BaseService {
   public async execute(data: Request) {
     const { provider_id, date } = data;
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
@@ -18,7 +21,10 @@ class CreateAppointmentService {
     );
 
     if (appointmentExists) {
-      throw new Error('This appointment is already booked.');
+      throw new AppException(
+        this.t('appointment_already_booked'),
+        StatusCodes.CONFLICT,
+      );
     }
 
     const appointment = appointmentsRepository.create({

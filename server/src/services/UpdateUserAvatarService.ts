@@ -1,15 +1,19 @@
 import { getCustomRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
+import { StatusCodes } from 'http-status-codes';
 import UsersRepository from '../repositories/UsersRepository';
 import uploadConfig from '../config/upload-config';
+
+import AppException from '../exceptions/AppException';
+import BaseService from '../common/base.services';
 
 interface Request {
   user_id: string;
   filename: string;
 }
 
-class UpdateUserAvatarService {
+class UpdateUserAvatarService extends BaseService {
   public async execute(data: Request) {
     const { user_id, filename } = data;
     const usersRepository = getCustomRepository(UsersRepository);
@@ -17,7 +21,10 @@ class UpdateUserAvatarService {
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('User is not registered.');
+      throw new AppException(
+        this.t('user_is_not_registered'),
+        StatusCodes.UNAUTHORIZED,
+      );
     }
 
     if (user.avatar) {

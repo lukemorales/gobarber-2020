@@ -34,7 +34,12 @@
   "rules": {
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "argsIgnorePattern": "_"
+    }],
     "camelcase": "off",
     "import/prefer-default-export": "off",
     "import/extensions": [
@@ -43,6 +48,12 @@
       {
         "ts": "never",
         "tsx": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
       }
     ]
   }

@@ -1,6 +1,8 @@
+import { StatusCodes } from 'http-status-codes';
 import { verify } from 'jsonwebtoken';
 import { ExpressMiddleware } from '../@types/middleware';
 import authConfig from '../config/auth-config';
+import AppException from '../exceptions/AppException';
 
 interface TokenPayload {
   iat: number;
@@ -8,11 +10,14 @@ interface TokenPayload {
   sub: string;
 }
 
-const ensureAuthentication: ExpressMiddleware = (request, response, next) => {
+const ensureAuthentication: ExpressMiddleware = (request, _, next) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new Error('Authentication token is missing');
+    throw new AppException(
+      request.t('missing_auth_token'),
+      StatusCodes.UNAUTHORIZED,
+    );
   }
 
   const [, token] = authHeader.split(' ');
@@ -28,8 +33,9 @@ const ensureAuthentication: ExpressMiddleware = (request, response, next) => {
 
     return next();
   } catch (err) {
-    throw new Error(
-      'Invalid authentication token, please log in a new session',
+    throw new AppException(
+      request.t('invalid_token'),
+      StatusCodes.UNAUTHORIZED,
     );
   }
 };
