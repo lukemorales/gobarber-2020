@@ -5,6 +5,7 @@
         "node": true
     },
     "extends": [
+        "prettier",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier/@typescript-eslint",
@@ -21,21 +22,60 @@
     "plugins": [
         "react",
         "prettier",
-        "@typescript-eslint"
+        "react-hooks",
+        "@typescript-eslint",
+        "import-helpers"
     ],
     "settings": {
       "import/resolver": {
-        "typescript": {}
+        "typescript": {
+          "project": "./**/tsconfig.json"
+        }
       }
     },
     "rules": {
       "prettier/prettier": "error",
+      "implicit-arrow-linebreak": "off",
+      "no-use-before-define": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-one-expression-per-line": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/prop-types": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "no-unused-expressions": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+      "import/prefer-default-export": "off",
+      "import/no-duplicates": "off",
+      "@typescript-eslint/indent": ["error", 2],
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-use-before-define": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-empty-interface": [
+        "error",
+        {
+          "allowSingleExtends": true
+        }
+      ],
       "import/extensions": [
         "error",
         "ignorePackages",
         {
           "ts": "never",
           "tsx": "never"
+        }
+      ],
+      "import-helpers/order-imports": [
+        "warn",
+        {
+          "newlinesBetween": "always",
+          "groups": [
+            ["/^react$/", "/^next/"],
+            "module",
+            ["parent", "sibling", "index", "/^@shared/skylab/"],
+            ["/^~/"]
+          ],
+          "alphabetize": { "order": "ignore", "ignoreCase": true }
         }
       ]
     }
