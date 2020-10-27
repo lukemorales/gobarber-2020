@@ -41,9 +41,9 @@ export default createGlobalStyle`
     body,
     input,
     button {
-      font: 1.6rem 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol';
+      font: 1.6rem 'Roboto Slab', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol';
       line-height: 1.48;
     }
 
@@ -54,13 +54,13 @@ export default createGlobalStyle`
     h5,
     h6,
     strong {
-      font-weight: 700;
+      font-weight: 500;
     }
 
     a {
       text-decoration: none;
       background: none;
-      font-weight: 700;
+      font-weight: 500;
       cursor: pointer;
       border: 0;
       transition: 180ms ease-in-out;
