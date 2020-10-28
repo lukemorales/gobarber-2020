@@ -35,6 +35,7 @@
     },
     "rules": {
       "prettier/prettier": "error",
+      "jsx-a11y/anchor-is-valid": 0,
       "implicit-arrow-linebreak": "off",
       "no-use-before-define": "off",
       "react/react-in-jsx-scope": "off",
