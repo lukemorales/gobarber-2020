@@ -1,6 +1,6 @@
 const dark = {
   colors: {
-    background: '#2a2537',
+    background: '#2b2735',
     black: '#27242e',
     shape: '#3c3847',
     grayHard: '#6e6359',

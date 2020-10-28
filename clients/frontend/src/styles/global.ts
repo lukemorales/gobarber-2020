@@ -45,6 +45,7 @@ export default createGlobalStyle`
         Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol';
       line-height: 1.48;
+      border: 0;
     }
 
     h1,
@@ -53,7 +54,8 @@ export default createGlobalStyle`
     h4,
     h5,
     h6,
-    strong {
+    strong,
+    button {
       font-weight: 500;
     }
 
@@ -69,7 +71,6 @@ export default createGlobalStyle`
 
     button {
       cursor: pointer;
-      border: 0;
       display: flex;
       justify-content: center;
       align-items: center;
