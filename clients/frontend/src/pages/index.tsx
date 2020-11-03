@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { FormEvent } from 'react';
 
 import styled, { css, useTheme } from 'styled-components';
+import { tint, shade } from 'polished';
 import { FiLogIn } from 'react-icons/fi';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
@@ -10,6 +12,10 @@ import Button from '~/components/Button';
 
 const Login = () => {
   const { colors } = useTheme();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <Container>
@@ -22,7 +28,7 @@ const Login = () => {
           </h1>
         </header>
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <strong>Faça seu login</strong>
 
           <input type="email" placeholder="E-mail" />
@@ -57,18 +63,18 @@ export default Login;
 
 const Container = styled.div`
   ${({ theme }) => css`
-    display: grid;
-    grid-template-areas: 'form image';
-    grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100%;
     color: ${theme.colors.white};
 
     > main {
-      grid-area: form;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      margin: auto;
 
       > header svg {
         width: 24rem;
@@ -83,6 +89,17 @@ const Container = styled.div`
           align-items: center;
           justify-content: center;
           color: ${theme.colors.orange};
+          border-bottom: 1px solid transparent;
+
+          :hover {
+            color: ${tint(0.13, theme.colors.orange)};
+            border-bottom-color: ${tint(0.13, theme.colors.orange)};
+            text-decoration: none;
+          }
+
+          :active {
+            color: ${shade(0.13, theme.colors.orange)};
+          }
 
           > svg {
             margin-right: 1.6rem;
@@ -92,9 +109,8 @@ const Container = styled.div`
     }
 
     > img {
-      grid-area: image;
       object-fit: cover;
-      width: 100%;
+      width: 60%;
       height: 100%;
       mix-blend-mode: hard-light;
       opacity: 0.8;

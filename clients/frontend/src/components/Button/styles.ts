@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { tint, shade } from 'polished';
 
 export const Container = styled.button`
   ${({ theme }) => css`
@@ -7,6 +8,15 @@ export const Container = styled.button`
     border-radius: ${theme.radii.default};
     padding: 1.6rem 2rem;
     width: 100%;
+    transition: 180ms ease-in-out;
+
+    :hover {
+      background: ${tint(0.13, theme.colors.orange)};
+    }
+
+    :active {
+      background: ${shade(0.13, theme.colors.orange)};
+    }
 
     :disabled {
       opacity: 0.5;

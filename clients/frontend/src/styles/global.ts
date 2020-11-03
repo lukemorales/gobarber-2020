@@ -1,4 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components';
+import { tint, shade } from 'polished';
 
 export default createGlobalStyle`
   ${({ theme }) => css`
@@ -67,6 +68,16 @@ export default createGlobalStyle`
       border: 0;
       transition: 180ms ease-in-out;
       color: ${theme.colors.orange};
+      transition: 180ms ease-in-out;
+
+      :hover {
+        color: ${tint(0.13, theme.colors.orange)};
+        text-decoration: underline;
+      }
+
+      :active {
+        color: ${shade(0.13, theme.colors.orange)};
+      }
     }
 
     button {
