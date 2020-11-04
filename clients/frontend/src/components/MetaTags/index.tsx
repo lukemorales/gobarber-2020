@@ -8,7 +8,7 @@ type MetaTagsProps = Partial<{
 }>;
 
 const MetaTags = (props: MetaTagsProps) => {
-  const { title, description, canonical, image } = props; //eslint-disable-line
+  const { title, description, canonical, image } = props;
 
   const pageTitle = title ? `${title} | GoBarber 2020` : 'GoBarber 2020';
 

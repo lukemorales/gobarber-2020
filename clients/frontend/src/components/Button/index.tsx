@@ -5,7 +5,7 @@ import * as S from './styles';
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { type, onClick, disabled, children } = props; //eslint-disable-line
+  const { type, onClick, disabled, children } = props;
 
   return (
     <S.Container type={type} onClick={onClick} disabled={disabled}>
