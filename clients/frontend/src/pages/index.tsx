@@ -1,16 +1,38 @@
 import Link from 'next/link';
 import { FormEvent } from 'react';
+import Image from 'next/image';
+import { getBlurhash } from 'next-blurhash';
+import { GetStaticProps } from 'next';
 
+import { BlurhashCanvas } from 'react-blurhash';
 import styled, { css, useTheme } from 'styled-components';
 import { tint, shade } from 'polished';
-import { FiLogIn } from 'react-icons/fi';
+import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 
 import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
+import Input from '~/components/Input';
 
-const Login = () => {
+type LoginProps = {
+  imgHash: string;
+  imgSrc: string;
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const imgSrc = '/bg_login.png';
+  const imgHash = await getBlurhash(imgSrc);
+
+  return {
+    props: {
+      imgHash,
+      imgSrc,
+    },
+  };
+};
+
+const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
 
   const handleSubmit = (e: FormEvent) => {
@@ -31,8 +53,13 @@ const Login = () => {
         <Form onSubmit={handleSubmit}>
           <strong>Faça seu login</strong>
 
-          <input type="email" placeholder="E-mail" />
-          <input type="password" placeholder="Senha" />
+          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
+          <Input
+            name="password"
+            type="password"
+            icon={FiLock}
+            placeholder="Senha"
+          />
 
           <Button type="submit">Entrar</Button>
 
@@ -48,13 +75,25 @@ const Login = () => {
         </footer>
       </main>
 
-      <img
-        src="/bg_login.png"
-        width={1421}
-        height="auto"
-        alt="GoBarber 2020"
-        loading="eager"
-      />
+      <ImageWrapper>
+        <BlurhashCanvas
+          hash={imgHash}
+          // getBlurhash **always** returns 32×32 dimensions
+          width={64}
+          height={64}
+          punch={1}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            height: '100%',
+          }}
+        />
+        <Image src={imgSrc} width={1920} height={1080} alt="GoBarber 2020" />
+      </ImageWrapper>
     </Container>
   );
 };
@@ -107,19 +146,35 @@ const Container = styled.div`
         }
       }
     }
-
-    > img {
-      object-fit: cover;
-      width: 60%;
-      height: 100%;
-      mix-blend-mode: hard-light;
-      opacity: 0.8;
-    }
   `}
 `;
 
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 60%;
+  height: 100%;
+
+  canvas {
+    mix-blend-mode: color-burn;
+    opacity: 0.2;
+  }
+
+  div {
+    width: 100%;
+    height: 100%;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      mix-blend-mode: color-burn;
+      opacity: 0.8;
+    }
+  }
+`;
+
 const Form = styled.form`
-  ${({ theme }) => css`
+  ${() => css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -131,21 +186,7 @@ const Form = styled.form`
       margin-bottom: 2.4rem;
     }
 
-    > input {
-      padding: 1.6rem;
-      width: 34rem;
-      border-radius: ${theme.radii.default};
-      background: ${theme.colors.inputs};
-      color: ${theme.colors.white};
-
-      ::placeholder {
-        color: ${theme.colors.grayHard};
-      }
-
-      + input {
-        margin-top: 0.8rem;
-      }
-
+    > label {
       :last-of-type {
         margin-bottom: 2.4rem;
       }
