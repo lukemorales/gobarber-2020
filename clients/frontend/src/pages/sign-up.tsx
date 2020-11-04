@@ -7,7 +7,7 @@ import { GetStaticProps } from 'next';
 import { BlurhashCanvas } from 'react-blurhash';
 import styled, { css, useTheme } from 'styled-components';
 import { tint, shade } from 'polished';
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 
@@ -21,7 +21,7 @@ type LoginProps = {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const imgSrc = '/bg_login.png';
+  const imgSrc = '/bg_signup.png';
   const imgHash = await getBlurhash(imgSrc);
 
   return {
@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const Login = ({ imgHash, imgSrc }: LoginProps) => {
+const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
 
   const handleSubmit = (e: FormEvent) => {
@@ -41,39 +41,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
 
   return (
     <Container>
-      <MetaTags title="Login" />
-
-      <main>
-        <header>
-          <h1>
-            <GoBarberLogo />
-          </h1>
-        </header>
-
-        <Form onSubmit={handleSubmit}>
-          <strong>Faça seu login</strong>
-
-          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            type="password"
-            icon={FiLock}
-            placeholder="Senha"
-          />
-
-          <Button type="submit">Entrar</Button>
-
-          <span>Esqueceu sua senha?</span>
-        </Form>
-
-        <footer>
-          <Link href="/sign-up">
-            <a>
-              <FiLogIn color={colors.orange} /> Criar conta
-            </a>
-          </Link>
-        </footer>
-      </main>
+      <MetaTags title="Cadastro" />
 
       <ImageWrapper>
         <BlurhashCanvas
@@ -94,11 +62,40 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
         />
         <Image src={imgSrc} width={780} height={840} alt="GoBarber 2020" />
       </ImageWrapper>
+
+      <main>
+        <header>
+          <h1>
+            <GoBarberLogo />
+          </h1>
+        </header>
+
+        <Form onSubmit={handleSubmit}>
+          <Input name="nome" type="text" icon={FiUser} placeholder="Nome" />
+          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
+          <Input
+            name="password"
+            type="password"
+            icon={FiLock}
+            placeholder="Senha"
+          />
+
+          <Button type="submit">Cadastrar</Button>
+        </Form>
+
+        <footer>
+          <Link href="/">
+            <a>
+              <FiArrowLeft color={colors.orange} /> Voltar para o Login
+            </a>
+          </Link>
+        </footer>
+      </main>
     </Container>
   );
 };
 
-export default Login;
+export default SignUp;
 
 const Container = styled.div`
   ${({ theme }) => css`
