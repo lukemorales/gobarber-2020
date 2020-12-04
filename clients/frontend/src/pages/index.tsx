@@ -5,10 +5,10 @@ import { getBlurhash } from 'next-blurhash';
 import { GetStaticProps } from 'next';
 
 import { BlurhashCanvas } from 'react-blurhash';
-import styled, { css, useTheme } from 'styled-components';
-import { tint, shade } from 'polished';
+import { useTheme } from 'styled-components';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
+import * as S from './_styles';
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 
 import MetaTags from '~/components/MetaTags';
@@ -40,7 +40,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
   };
 
   return (
-    <Container>
+    <S.Container>
       <MetaTags title="Login" />
 
       <main>
@@ -50,7 +50,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
           </h1>
         </header>
 
-        <Form onSubmit={handleSubmit}>
+        <S.Form onSubmit={handleSubmit}>
           <strong>Faça seu login</strong>
 
           <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
@@ -64,7 +64,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
           <Button type="submit">Entrar</Button>
 
           <span>Esqueceu sua senha?</span>
-        </Form>
+        </S.Form>
 
         <footer>
           <Link href="/sign-up">
@@ -75,7 +75,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
         </footer>
       </main>
 
-      <ImageWrapper>
+      <S.ImageWrapper>
         <BlurhashCanvas
           hash={imgHash}
           // getBlurhash **always** returns 32×32 dimensions
@@ -92,110 +92,10 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
             height: '100%',
           }}
         />
-        <Image src={imgSrc} width={780} height={840} alt="GoBarber 2020" />
-      </ImageWrapper>
-    </Container>
+        <Image src={imgSrc} layout="fill" alt="GoBarber 2020" />
+      </S.ImageWrapper>
+    </S.Container>
   );
 };
 
 export default Login;
-
-const Container = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    color: ${theme.colors.white};
-
-    > main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-      padding: 1.6rem;
-
-      > header svg {
-        width: 24rem;
-        height: auto;
-      }
-
-      > footer {
-        margin-top: 8rem;
-
-        > a {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: ${theme.colors.orange};
-          border-bottom: 1px solid transparent;
-
-          :hover {
-            color: ${tint(0.13, theme.colors.orange)};
-            border-bottom-color: ${tint(0.13, theme.colors.orange)};
-            text-decoration: none;
-          }
-
-          :active {
-            color: ${shade(0.13, theme.colors.orange)};
-          }
-
-          > svg {
-            margin-right: 1.6rem;
-          }
-        }
-      }
-    }
-  `}
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 60%;
-  height: 100%;
-
-  canvas {
-    mix-blend-mode: color-burn;
-    opacity: 0.2;
-  }
-
-  div {
-    width: 100% !important;
-    height: 100vh;
-    overflow: hidden;
-
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-      mix-blend-mode: color-burn;
-      opacity: 0.8;
-    }
-  }
-`;
-
-const Form = styled.form`
-  ${() => css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 8rem;
-
-    > strong {
-      font-size: 2.4rem;
-      margin-bottom: 2.4rem;
-    }
-
-    > label {
-      :last-of-type {
-        margin-bottom: 2.4rem;
-      }
-    }
-
-    > button + span {
-      margin-top: 2.4rem;
-    }
-  `}
-`;
