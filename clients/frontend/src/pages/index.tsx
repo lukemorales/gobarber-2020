@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { FormEvent } from 'react';
 import Image from 'next/image';
 import { getBlurhash } from 'next-blurhash';
 import { GetStaticProps } from 'next';
@@ -7,6 +6,9 @@ import { GetStaticProps } from 'next';
 import { BlurhashCanvas } from 'react-blurhash';
 import { useTheme } from 'styled-components';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import * as S from './_styles';
 import GoBarberLogo from '../../public/gobarber_logo.svg';
@@ -18,6 +20,11 @@ import Input from '~/components/Input';
 type LoginProps = {
   imgHash: string;
   imgSrc: string;
+};
+
+type FormData = {
+  email: string;
+  password: string;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -32,11 +39,23 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .required('Preencha seu email')
+    .email('Por favor, digite um e-mail válido'),
+  password: Yup.string().min(6, 'Senha deve conter pelo menos 6 caracteres'),
+});
+
 const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const formMethods = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+  const { handleSubmit } = formMethods;
+
+  const handleFormData = (data: FormData) => {
+    console.log({ data });
   };
 
   return (
@@ -50,21 +69,30 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
           </h1>
         </header>
 
-        <S.Form onSubmit={handleSubmit}>
-          <strong>Faça seu login</strong>
+        <FormProvider {...formMethods}>
+          <S.Form onSubmit={handleSubmit(handleFormData)}>
+            <strong>Faça seu login</strong>
 
-          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            type="password"
-            icon={FiLock}
-            placeholder="Senha"
-          />
+            <Input
+              name="email"
+              type="email"
+              icon={FiMail}
+              placeholder="E-mail"
+              required
+            />
+            <Input
+              name="password"
+              type="password"
+              icon={FiLock}
+              placeholder="Senha"
+              required
+            />
 
-          <Button type="submit">Entrar</Button>
+            <Button type="submit">Entrar</Button>
 
-          <span>Esqueceu sua senha?</span>
-        </S.Form>
+            <span>Esqueceu sua senha?</span>
+          </S.Form>
+        </FormProvider>
 
         <footer>
           <Link href="/sign-up">
