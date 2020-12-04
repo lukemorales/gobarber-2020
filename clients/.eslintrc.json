@@ -5,12 +5,12 @@
         "node": true
     },
     "extends": [
-        "prettier",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended",
-        "airbnb"
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended",
+      "airbnb",
+      "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -35,6 +35,7 @@
     },
     "rules": {
       "prettier/prettier": "error",
+      "jsx-a11y/anchor-is-valid": 0,
       "implicit-arrow-linebreak": "off",
       "no-use-before-define": "off",
       "react/react-in-jsx-scope": "off",

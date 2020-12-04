@@ -8,8 +8,7 @@ type MetaTagsProps = Partial<{
 }>;
 
 const MetaTags = (props: MetaTagsProps) => {
-  const { title, description, canonical, image
-} = props;
+  const { title, description, canonical, image } = props;
 
   const pageTitle = title ? `${title} | GoBarber 2020` : 'GoBarber 2020';
 
@@ -34,8 +33,8 @@ const MetaTags = (props: MetaTagsProps) => {
       <meta
         property="og:image"
         content={
-          image
-          || 'https://www.propernoun.co/static/images/proper-noun-social.png'
+          image ||
+          'https://www.propernoun.co/static/images/proper-noun-social.png'
         }
       />
       {image && <meta name="twitter:image" content={image} />}

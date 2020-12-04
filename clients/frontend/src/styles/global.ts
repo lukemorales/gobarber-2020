@@ -1,4 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components';
+import { tint, shade } from 'polished';
 
 export default createGlobalStyle`
   ${({ theme }) => css`
@@ -41,10 +42,11 @@ export default createGlobalStyle`
     body,
     input,
     button {
-      font: 1.6rem 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol';
+      font: 1.6rem 'Roboto Slab', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol';
       line-height: 1.48;
+      border: 0;
     }
 
     h1,
@@ -53,23 +55,33 @@ export default createGlobalStyle`
     h4,
     h5,
     h6,
-    strong {
-      font-weight: 700;
+    strong,
+    button {
+      font-weight: 500;
     }
 
     a {
       text-decoration: none;
       background: none;
-      font-weight: 700;
+      font-weight: 500;
       cursor: pointer;
       border: 0;
       transition: 180ms ease-in-out;
       color: ${theme.colors.orange};
+      transition: 180ms ease-in-out;
+
+      :hover {
+        color: ${tint(0.13, theme.colors.orange)};
+        text-decoration: underline;
+      }
+
+      :active {
+        color: ${shade(0.13, theme.colors.orange)};
+      }
     }
 
     button {
       cursor: pointer;
-      border: 0;
       display: flex;
       justify-content: center;
       align-items: center;
