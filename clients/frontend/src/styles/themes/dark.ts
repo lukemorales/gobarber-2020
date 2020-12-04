@@ -8,6 +8,7 @@ const dark = {
     white: '#F4EDE8',
     orange: '#FF9000',
     inputs: '#211e29',
+    error: '#f5390f',
   },
   radii: {
     default: '0.8rem',
