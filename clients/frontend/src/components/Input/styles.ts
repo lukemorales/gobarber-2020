@@ -1,4 +1,3 @@
-import { tint } from 'polished';
 import styled, { css } from 'styled-components';
 
 type InputContainerProps = { hasError: boolean; isFilled: boolean };
@@ -18,9 +17,9 @@ export const Container = styled.label<InputContainerProps>`
 
     > svg {
       flex-shrink: 0;
+      transition: 180ms ease-in-out;
       margin-right: 1.6rem;
       color: ${isFilled ? theme.colors.orange : theme.colors.grayHard};
-      transition: 180ms ease-in-out;
     }
 
     > input {
@@ -54,15 +53,5 @@ export const Container = styled.label<InputContainerProps>`
     + label {
       margin-top: 0.8rem;
     }
-  `}
-`;
-
-export const ErrorMessage = styled.span`
-  ${({ theme }) => css`
-    position: absolute;
-    bottom: 0.2rem;
-    left: 4.9rem;
-    font-size: 11px;
-    color: ${tint(0.43, theme.colors.error)};
   `}
 `;
