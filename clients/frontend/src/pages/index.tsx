@@ -42,8 +42,8 @@ export const getStaticProps: GetStaticProps = async () => {
 const schema = Yup.object().shape({
   email: Yup.string()
     .required('Preencha seu email')
-    .email('Por favor, digite um e-mail válido'),
-  password: Yup.string().min(6, 'Senha deve conter pelo menos 6 caracteres'),
+    .email('Digite um e-mail válido'),
+  password: Yup.string().min(6, 'Preencha sua senha'),
 });
 
 const Login = ({ imgHash, imgSrc }: LoginProps) => {
