@@ -8,6 +8,8 @@
     "dev": "tsnd --inspect --respawn --transpile-only src/server.ts",
     "start": "node dist/server",
     "typeorm": "tsnd ./node_modules/typeorm/cli.js",
+    "migration": "npm run typeorm -- migration:run",
+    "add-migration": "npm run typeorm -- migration:generate -n",
     "types:locales:generate": "i18next-typescript generate",
     "types:locales:watch": "i18next-typescript watch"
   },
@@ -27,7 +29,8 @@
     "pg": "^8.4.2",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29",
-    "uuidv4": "^6.2.5"
+    "uuidv4": "^6.2.5",
+    "envalid": "6.0.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
