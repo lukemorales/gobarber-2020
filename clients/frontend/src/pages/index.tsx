@@ -16,6 +16,7 @@ import GoBarberLogo from '../../public/gobarber_logo.svg';
 import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import useAuth from '~/contexts/auth';
 
 type LoginProps = {
   imgHash: string;
@@ -26,6 +27,13 @@ type FormData = {
   email: string;
   password: string;
 };
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .required('Preencha seu email')
+    .email('Digite um e-mail válido'),
+  password: Yup.string().min(6, 'Preencha sua senha'),
+});
 
 export const getStaticProps: GetStaticProps = async () => {
   const imgSrc = '/bg_login.png';
@@ -39,24 +47,14 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .required('Preencha seu email')
-    .email('Digite um e-mail válido'),
-  password: Yup.string().min(6, 'Preencha sua senha'),
-});
-
 const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
+  const { handleSignIn } = useAuth();
 
   const formMethods = useForm<FormData>({
     resolver: yupResolver(schema),
   });
   const { handleSubmit } = formMethods;
-
-  const handleFormData = (data: FormData) => {
-    console.log({ data });
-  };
 
   return (
     <S.Container>
@@ -70,7 +68,7 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
         </header>
 
         <FormProvider {...formMethods}>
-          <S.Form onSubmit={handleSubmit(handleFormData)}>
+          <S.Form onSubmit={handleSubmit(handleSignIn)}>
             <strong>Faça seu login</strong>
 
             <Input
