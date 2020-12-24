@@ -74,7 +74,7 @@ if (config.type === 'mysql') {
     type: 'sqlite',
   });
 } else {
-  throw new Error('Não há um outro tipo de banco de dados suportado, por favor, altere para mysql, postgres ou sqlite o valor de DB_TYPE.');
+  throw new Error('There is no other supported database type, please change the value of DB_TYPE to mysql, postgres or sqlite.');
 }
 
 module.exports = config;
