@@ -1,9 +1,14 @@
-import { useCallback } from 'react';
-import { useMemo } from 'react';
-import { createContext, useContext, PropsWithChildren } from 'react';
-import { useState } from 'react';
+import {
+  createContext,
+  useContext,
+  PropsWithChildren,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
 
 import { AuthContextData, AuthData, User } from './types';
+import useToast from '../toast';
 
 import api from '~/services/api';
 import { getLocalStorageKey } from '~/utils';
@@ -11,6 +16,8 @@ import { getLocalStorageKey } from '~/utils';
 const AuthContext = createContext({} as AuthContextData);
 
 export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
+  const { addToast } = useToast();
+
   const [user, setUser] = useState<User>(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem(getLocalStorageKey('token'));
@@ -45,11 +52,12 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
+        addToast();
       } finally {
         setIsLoading(false);
       }
     },
-    [],
+    [addToast],
   );
 
   const handleSignOut: AuthContextData['handleSignOut'] = useCallback(() => {
