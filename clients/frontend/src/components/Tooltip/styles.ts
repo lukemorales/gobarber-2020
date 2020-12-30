@@ -7,7 +7,7 @@ type TooltipContainerProps = {
   position: TooltipPosition;
 };
 
-const tooltipPosition = {
+const modifiers = {
   top: (color: string) => css`
     ::before,
     ::after {
@@ -118,7 +118,7 @@ export const Container = styled.div<TooltipContainerProps>`
       border-style: solid;
     }
 
-    ${tooltipPosition[position](color || theme.colors.orange)}
+    ${modifiers[position](color || theme.colors.orange)}
 
     :hover {
       ::before,
