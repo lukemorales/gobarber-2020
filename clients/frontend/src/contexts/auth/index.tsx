@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 import { AuthContextData, AuthData, User } from './types';
-import useToast from '../toast';
+import useToasts from '../toast';
 
 import api from '~/services/api';
 import { getLocalStorageKey } from '~/utils';
@@ -16,7 +16,7 @@ import { getLocalStorageKey } from '~/utils';
 const AuthContext = createContext({} as AuthContextData);
 
 export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
-  const { addToast } = useToast();
+  const { addToast } = useToasts();
 
   const [user, setUser] = useState<User>(() => {
     if (typeof window !== 'undefined') {
@@ -52,7 +52,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
-        addToast();
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Não foi possível autenticar, tente novamente.',
+        });
       } finally {
         setIsLoading(false);
       }

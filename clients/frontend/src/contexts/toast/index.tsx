@@ -4,21 +4,38 @@ import {
   PropsWithChildren,
   useCallback,
   useMemo,
+  useState,
 } from 'react';
 
-import { ToastContextData } from './types';
+import { nanoid } from 'nanoid';
+
+import { ToastContextData, ToastMessage } from './types';
 
 import ToastContainer from '~/components/ToastContainer';
 
 const ToastContext = createContext({} as ToastContextData);
 
 export const ToastProvider = ({ children }: PropsWithChildren<unknown>) => {
-  const addToast = useCallback(() => {
-    console.log('adding toasts');
+  const [messages, setMessages] = useState<Array<ToastMessage>>([]);
+
+  const addToast = useCallback<ToastContextData['addToast']>((message) => {
+    const id = nanoid();
+
+    const toast: ToastMessage = {
+      id,
+      ...message,
+    };
+
+    setMessages((prevState) => [...prevState, toast]);
   }, []);
-  const removeToast = useCallback(() => {
-    console.log('removing toasts');
-  }, []);
+
+  const removeToast = useCallback<ToastContextData['removeToast']>(
+    (id) =>
+      setMessages((prevState) =>
+        prevState.filter((message) => message.id !== id),
+      ),
+    [],
+  );
 
   const value = useMemo<ToastContextData>(
     () => ({
@@ -31,12 +48,12 @@ export const ToastProvider = ({ children }: PropsWithChildren<unknown>) => {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <ToastContainer />
+      <ToastContainer messages={messages} />
     </ToastContext.Provider>
   );
 };
 
-const useToast = () => {
+const useToasts = () => {
   const context = useContext(ToastContext);
 
   if (!context) {
@@ -46,4 +63,4 @@ const useToast = () => {
   return context;
 };
 
-export default useToast;
+export default useToasts;
