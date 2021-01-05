@@ -10,12 +10,12 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import * as S from './_styles';
-import GoBarberLogo from '../../public/gobarber_logo.svg';
-
 import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+
+import GoBarberLogo from '../../public/gobarber_logo.svg';
+import * as S from './_styles';
 
 type LoginProps = {
   imgHash: string;

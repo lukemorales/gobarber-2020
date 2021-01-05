@@ -7,11 +7,11 @@ import {
   useMemo,
 } from 'react';
 
-import { AuthContextData, AuthData, User } from './types';
-import useToasts from '../toast';
-
 import api from '~/services/api';
 import { getLocalStorageKey } from '~/utils';
+
+import { AuthContextData, AuthData, User } from './types';
+import useToasts from '../toast';
 
 const AuthContext = createContext({} as AuthContextData);
 

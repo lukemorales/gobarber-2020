@@ -9,10 +9,10 @@ import {
   FiXCircle,
 } from 'react-icons/fi';
 
-import * as S from './styles';
-
 import useToasts from '~/contexts/toast';
 import { ToastMessage, ToastType } from '~/contexts/toast/types';
+
+import * as S from './styles';
 
 type ToastProps = {
   message: ToastMessage;

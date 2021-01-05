@@ -9,9 +9,9 @@ import {
 
 import { nanoid } from 'nanoid';
 
-import { ToastContextData, ToastMessage } from './types';
-
 import ToastContainer from '~/components/ToastContainer';
+
+import { ToastContextData, ToastMessage } from './types';
 
 const ToastContext = createContext({} as ToastContextData);
 

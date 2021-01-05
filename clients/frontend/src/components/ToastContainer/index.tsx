@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
 
+import { ToastMessage } from '~/contexts/toast/types';
+
 import * as S from './styles';
 import Toast from './Toast';
-
-import { ToastMessage } from '~/contexts/toast/types';
 
 type ToastContainerProps = {
   messages: Array<ToastMessage>;

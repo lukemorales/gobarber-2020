@@ -74,8 +74,8 @@
           "groups": [
             ["/^react$/", "/^next/"],
             "module",
-            ["parent", "sibling", "index", "/^@shared/skylab/"],
-            ["/^~/"]
+            ["/^~/"],
+            ["parent", "sibling", "index"]
           ],
           "alphabetize": { "order": "ignore", "ignoreCase": true }
         }
