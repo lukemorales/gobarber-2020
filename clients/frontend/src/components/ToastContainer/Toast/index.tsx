@@ -35,13 +35,25 @@ const Toast = ({ message }: ToastProps) => {
   const { removeToast } = useToasts();
 
   useEffect(() => {
-    const timer = setTimeout(() => removeToast(id), 3000);
+    const timer = setTimeout(() => removeToast(id), 5000);
 
     return () => clearTimeout(timer);
   }, [removeToast, id]);
 
   return (
-    <S.Container key={id} type={type}>
+    <S.Container
+      key={id}
+      type={type}
+      layout="position"
+      initial={{ x: 364, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{
+        x: 364,
+        opacity: 0,
+        transition: { type: 'spring', duration: 0.45 },
+      }}
+      transition={{ type: 'spring', duration: 0.6 }}
+    >
       {toastIcons[type]}
 
       <div>

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { ToastType } from '~/contexts/toast/types';
 
@@ -6,7 +7,7 @@ type ToastProps = {
   type: ToastType;
 };
 
-export const Container = styled.aside<ToastProps>`
+export const Container = styled(motion.aside)<ToastProps>`
   ${({ theme, type }) => css`
     width: 360px;
     position: relative;
@@ -36,16 +37,25 @@ export const Container = styled.aside<ToastProps>`
 
     > button {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 16px 16px 0 0;
       opacity: 0.6;
       border: 0;
       background: transparent;
       color: inherit;
+      cursor: pointer;
+      pointer-events: all;
     }
 
     & + & {
-      margin-top: 8px;
+      margin-top: 12px;
     }
   `}
 `;

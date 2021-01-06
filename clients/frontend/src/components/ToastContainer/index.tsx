@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import { AnimatePresence } from 'framer-motion';
+
 import { ToastMessage } from '~/contexts/toast/types';
 
 import * as S from './styles';
@@ -14,9 +16,11 @@ const ToastContainer = (props: PropsWithChildren<ToastContainerProps>) => {
 
   return (
     <S.Container>
-      {messages.map((message) => (
-        <Toast key={message.id} message={message} />
-      ))}
+      <AnimatePresence>
+        {messages.map((message) => (
+          <Toast key={message.id} message={message} />
+        ))}
+      </AnimatePresence>
     </S.Container>
   );
 };
