@@ -14,6 +14,11 @@ import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import useAuth from '~/contexts/auth';
+import {
+  AUTH_CONTAINER_ANIMATION,
+  AUTH_HERO_ANIMATION,
+  AUTH_MAIN_ANIMATION,
+} from '~/constants/animations';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 import * as S from './_styles';
@@ -57,10 +62,10 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { handleSubmit } = formMethods;
 
   return (
-    <S.Container>
+    <S.Container {...AUTH_CONTAINER_ANIMATION}>
       <MetaTags title="Login" />
 
-      <main>
+      <S.AnimatedMain {...AUTH_MAIN_ANIMATION('right')}>
         <header>
           <h1>
             <GoBarberLogo />
@@ -99,9 +104,9 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
             </a>
           </Link>
         </footer>
-      </main>
+      </S.AnimatedMain>
 
-      <S.ImageWrapper>
+      <S.ImageWrapper {...AUTH_HERO_ANIMATION('right')}>
         <BlurhashCanvas
           hash={imgHash}
           // getBlurhash **always** returns 32×32 dimensions
