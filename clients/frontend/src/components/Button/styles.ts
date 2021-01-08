@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components';
 import { tint, shade } from 'polished';
+import { motion } from 'framer-motion';
 
-export const Container = styled.button`
+export const Container = styled(motion.button)`
   ${({ theme }) => css`
     background: ${theme.colors.orange};
     color: ${theme.colors.background};

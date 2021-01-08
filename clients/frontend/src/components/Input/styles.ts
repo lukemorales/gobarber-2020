@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 type InputContainerProps = { hasError: boolean; isFilled: boolean };
 
-export const Container = styled.label<InputContainerProps>`
+export const Container = styled(motion.label)<InputContainerProps>`
   ${({ theme, hasError, isFilled }) => css`
     padding: 1.6rem;
     width: 34rem;

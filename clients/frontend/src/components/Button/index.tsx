@@ -1,14 +1,16 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
+import { MotionProps } from 'framer-motion';
+
 import * as S from './styles';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & MotionProps;
 
 const Button = (props: PropsWithChildren<ButtonProps>) => {
-  const { type, onClick, disabled, children } = props;
+  const { type, onClick, disabled, children, ...rest } = props;
 
   return (
-    <S.Container type={type} onClick={onClick} disabled={disabled}>
+    <S.Container type={type} onClick={onClick} disabled={disabled} {...rest}>
       {children}
     </S.Container>
   );

@@ -1,5 +1,6 @@
 import React, { ComponentType, InputHTMLAttributes, useState } from 'react';
 
+import { MotionProps } from 'framer-motion';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
@@ -8,14 +9,28 @@ import { useTheme } from 'styled-components';
 import Tooltip from '../Tooltip';
 import * as S from './styles';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type MotionInputProps = InputHTMLAttributes<HTMLInputElement> & MotionProps;
+
+type InputProps = MotionInputProps & {
   name: string;
   icon: ComponentType<IconBaseProps>;
 };
 
 const Input = (props: InputProps) => {
-  const { name, icon: Icon, required, ...rest } = props;
+  const {
+    name,
+    icon: Icon,
+    required,
+    initial,
+    animate,
+    exit,
+    layout,
+    layoutId,
+    ...rest
+  } = props;
   delete rest.value;
+
+  const motionProps = { initial, animate, exit, layout };
 
   const [isFilled, setIsFilled] = useState(false);
 
@@ -30,7 +45,13 @@ const Input = (props: InputProps) => {
   };
 
   return (
-    <S.Container htmlFor={name} hasError={!!inputError} isFilled={isFilled}>
+    <S.Container
+      layoutId={layoutId}
+      htmlFor={name}
+      hasError={!!inputError}
+      isFilled={isFilled}
+      {...motionProps}
+    >
       {Icon && <Icon size="1.6rem" />}
       <input
         name={name}
