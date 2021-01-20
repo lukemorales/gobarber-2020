@@ -3,6 +3,12 @@ export type SignInCredentials = {
   password: string;
 };
 
+export type SignUpCredentials = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type User = {
   id: string;
   name: string;
@@ -19,5 +25,6 @@ export type AuthContextData = {
   user: User;
   isLoading: boolean;
   handleSignIn: (credentials: SignInCredentials) => Promise<void>;
+  handleSignUp: (credentials: SignUpCredentials) => Promise<void>;
   handleSignOut: () => void;
 };

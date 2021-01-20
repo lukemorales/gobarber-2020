@@ -8,9 +8,10 @@ import {
 } from 'react';
 
 import api from '~/services/api';
-import { getLocalStorageKey } from '~/utils';
+import { composeLocalStorageKey } from '~/utils';
 
-import { AuthContextData, AuthData, User } from './types';
+import { handleAuthEndpoint } from './helpers';
+import { AuthContextData, User } from './types';
 import useToasts from '../toast';
 
 const AuthContext = createContext({} as AuthContextData);
@@ -20,11 +21,11 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 
   const [user, setUser] = useState<User>(() => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem(getLocalStorageKey('token'));
-      const client = localStorage.getItem(getLocalStorageKey('user'));
+      const token = localStorage.getItem(composeLocalStorageKey('token'));
+      const userData = localStorage.getItem(composeLocalStorageKey('user'));
 
-      if (token && client) {
-        return JSON.parse(client);
+      if (token && userData) {
+        return JSON.parse(userData);
       }
     }
 
@@ -36,19 +37,9 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
     async (credentials) => {
       try {
         setIsLoading(true);
-        const { data } = await api.post<AuthData>('sessions', credentials);
+        const userData = await handleAuthEndpoint('/sessions', credentials);
 
-        if (typeof window !== 'undefined') {
-          localStorage.setItem(getLocalStorageKey('token'), data.token);
-          localStorage.setItem(
-            getLocalStorageKey('user'),
-            JSON.stringify(data.user),
-          );
-        }
-
-        api.defaults.headers.Authorization = `Bearer ${data.token}`;
-
-        setUser(data.user);
+        setUser(userData);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -64,10 +55,33 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
     [addToast],
   );
 
+  const handleSignUp: AuthContextData['handleSignUp'] = useCallback(
+    async (credentials) => {
+      try {
+        setIsLoading(true);
+        const userData = await handleAuthEndpoint('/users', credentials);
+
+        setUser(userData);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        addToast({
+          type: 'error',
+          title: 'Erro na criação de uma nova conta',
+          description:
+            'Não foi possível criar um novo usuário, tente novamente.',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [addToast],
+  );
+
   const handleSignOut: AuthContextData['handleSignOut'] = useCallback(() => {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(getLocalStorageKey('token'));
-      localStorage.removeItem(getLocalStorageKey('user'));
+      localStorage.removeItem(composeLocalStorageKey('token'));
+      localStorage.removeItem(composeLocalStorageKey('user'));
     }
 
     setUser({} as User);
@@ -75,14 +89,15 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
     api.defaults.headers.Authorization = null;
   }, []);
 
-  const value = useMemo(
+  const value = useMemo<AuthContextData>(
     () => ({
       user,
       isLoading,
       handleSignIn,
       handleSignOut,
+      handleSignUp,
     }),
-    [handleSignIn, isLoading, user, handleSignOut],
+    [handleSignIn, isLoading, user, handleSignOut, handleSignUp],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

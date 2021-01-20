@@ -18,6 +18,7 @@ import {
   AUTH_HERO_ANIMATION,
   AUTH_MAIN_ANIMATION,
 } from '~/constants/animations';
+import useAuth from '~/contexts/auth';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 import * as S from './_styles';
@@ -49,15 +50,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
+  const { handleSignUp, isLoading } = useAuth();
 
   const formMethods = useForm<FormData>({
     resolver: yupResolver(schema),
   });
   const { handleSubmit } = formMethods;
-
-  const handleFormData = (data: FormData) => {
-    console.log({ data });
-  };
 
   return (
     <S.Container {...AUTH_CONTAINER_ANIMATION}>
@@ -91,7 +89,7 @@ const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
         </header>
 
         <FormProvider {...formMethods}>
-          <S.Form onSubmit={handleSubmit(handleFormData)}>
+          <S.Form onSubmit={handleSubmit(handleSignUp)}>
             <Input
               key="name"
               name="name"
@@ -115,7 +113,9 @@ const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
               required
             />
 
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Cadastrar
+            </Button>
           </S.Form>
         </FormProvider>
 

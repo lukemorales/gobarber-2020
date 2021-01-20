@@ -19,6 +19,7 @@ import {
   AUTH_HERO_ANIMATION,
   AUTH_MAIN_ANIMATION,
 } from '~/constants/animations';
+import { SignInCredentials } from '~/contexts/auth/types';
 
 import GoBarberLogo from '../../public/gobarber_logo.svg';
 import * as S from './_styles';
@@ -26,11 +27,6 @@ import * as S from './_styles';
 type LoginProps = {
   imgHash: string;
   imgSrc: string;
-};
-
-type FormData = {
-  email: string;
-  password: string;
 };
 
 const schema = Yup.object().shape({
@@ -54,9 +50,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
-  const { handleSignIn } = useAuth();
+  const { handleSignIn, isLoading } = useAuth();
 
-  const formMethods = useForm<FormData>({
+  const formMethods = useForm<SignInCredentials>({
     resolver: yupResolver(schema),
   });
   const { handleSubmit } = formMethods;
@@ -91,7 +87,9 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
               required
             />
 
-            <Button type="submit">Entrar</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Entrar
+            </Button>
 
             <span>Esqueceu sua senha?</span>
           </S.Form>
