@@ -49,7 +49,7 @@
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
       "import/prefer-default-export": "off",
       "import/no-duplicates": "off",
-      "@typescript-eslint/indent": ["error", 2],
+      "@typescript-eslint/indent": "off",
       "@typescript-eslint/camelcase": "off",
       "@typescript-eslint/no-use-before-define": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
