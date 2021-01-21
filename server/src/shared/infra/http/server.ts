@@ -8,10 +8,10 @@ import i18nextMiddleware from 'i18next-http-middleware';
 import Backend from 'i18next-node-fs-backend';
 import i18next from 'i18next';
 
-import routes from './shared/routes';
-import './shared/database';
-import uploadConfig from './config/upload-config';
-import generalException from './shared/middlewares/generalException';
+import routes from './routes';
+import '../typeorm';
+import uploadConfig from '../../../config/upload-config';
+import generalException from './middlewares/generalException';
 
 const app = express();
 
