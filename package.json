@@ -23,7 +23,9 @@
   },
   "scripts": {
     "test": "jest",
-    "test:watch": "yarn test --watch"
+    "test:watch": "yarn test --watch",
+    "lint:clients": "eslint clients/* --ext .ts,.tsx --fix",
+    "lint:server": "eslint server/src --ext .ts,.tsx --fix"
   },
   "license": "MIT",
   "devDependencies": {

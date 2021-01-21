@@ -3,7 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import UsersRepository from '../repositories/UsersRepository';
-import authConfig from '../config/auth-config';
+import AUTH_CONFIG from '../config/auth-config';
 import AppException from '../exceptions/AppException';
 import BaseService from '../common/base.services';
 
@@ -35,14 +35,20 @@ class AuthenticateUserService extends BaseService {
       );
     }
 
-    const { jwt } = authConfig;
+    const token = AuthenticateUserService.generateToken(user.id);
+
+    return { user, token };
+  }
+
+  static generateToken(id: string) {
+    const { jwt } = AUTH_CONFIG;
 
     const token = sign({}, jwt.secret, {
-      subject: user.id,
+      subject: id,
       expiresIn: jwt.expiresIn,
     });
 
-    return { user, token };
+    return token;
   }
 }
 

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { FormEvent } from 'react';
 import Image from 'next/image';
 import { getBlurhash } from 'next-blurhash';
 import { GetStaticProps } from 'next';
@@ -7,21 +6,38 @@ import { GetStaticProps } from 'next';
 import { BlurhashCanvas } from 'react-blurhash';
 import { useTheme } from 'styled-components';
 import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
-
-import * as S from './_styles';
-import GoBarberLogo from '../../public/gobarber_logo.svg';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import {
+  AUTH_CONTAINER_ANIMATION,
+  AUTH_HERO_ANIMATION,
+  AUTH_MAIN_ANIMATION,
+} from '~/constants/animations';
+import useAuth from '~/contexts/auth';
+
+import GoBarberLogo from '../../public/gobarber_logo.svg';
+import * as S from './_styles';
 
 type LoginProps = {
   imgHash: string;
   imgSrc: string;
 };
 
+const schema = Yup.object().shape({
+  name: Yup.string().required('Preencha seu nome completo'),
+  email: Yup.string()
+    .required('Preencha seu email')
+    .email('Digite um e-mail válido'),
+  password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+});
+
 export const getStaticProps: GetStaticProps = async () => {
-  const imgSrc = '/bg_signup.png';
+  const imgSrc = '/bg_login.png';
   const imgHash = await getBlurhash(imgSrc);
 
   return {
@@ -34,16 +50,18 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
+  const { handleSignUp, isLoading } = useAuth();
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
+  const formMethods = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+  const { handleSubmit } = formMethods;
 
   return (
-    <S.Container>
+    <S.Container {...AUTH_CONTAINER_ANIMATION}>
       <MetaTags title="Cadastro" />
 
-      <S.ImageWrapper>
+      <S.ImageWrapper {...AUTH_HERO_ANIMATION('left')}>
         <BlurhashCanvas
           hash={imgHash}
           // getBlurhash **always** returns 32×32 dimensions
@@ -63,25 +81,43 @@ const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
         <Image src={imgSrc} layout="fill" alt="GoBarber 2020" />
       </S.ImageWrapper>
 
-      <main>
+      <S.AnimatedMain {...AUTH_MAIN_ANIMATION('left')}>
         <header>
           <h1>
             <GoBarberLogo />
           </h1>
         </header>
 
-        <S.Form onSubmit={handleSubmit}>
-          <Input name="nome" type="text" icon={FiUser} placeholder="Nome" />
-          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            type="password"
-            icon={FiLock}
-            placeholder="Senha"
-          />
+        <FormProvider {...formMethods}>
+          <S.Form onSubmit={handleSubmit(handleSignUp)}>
+            <Input
+              key="name"
+              name="name"
+              type="text"
+              icon={FiUser}
+              placeholder="Nome"
+              required
+            />
+            <Input
+              name="email"
+              type="email"
+              icon={FiMail}
+              placeholder="E-mail"
+              required
+            />
+            <Input
+              name="password"
+              type="password"
+              icon={FiLock}
+              placeholder="Senha"
+              required
+            />
 
-          <Button type="submit">Cadastrar</Button>
-        </S.Form>
+            <Button type="submit" isLoading={isLoading}>
+              Cadastrar
+            </Button>
+          </S.Form>
+        </FormProvider>
 
         <footer>
           <Link href="/">
@@ -90,7 +126,7 @@ const SignUp = ({ imgHash, imgSrc }: LoginProps) => {
             </a>
           </Link>
         </footer>
-      </main>
+      </S.AnimatedMain>
     </S.Container>
   );
 };

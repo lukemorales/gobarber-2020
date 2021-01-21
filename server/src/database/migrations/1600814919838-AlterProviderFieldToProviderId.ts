@@ -4,16 +4,16 @@ import {
   TableColumn,
   TableForeignKey,
 } from 'typeorm';
-import { appointmentsTableName } from './1600388380111-CreateAppointments';
-import { usersTableName } from './1600391794490-CreateUsers';
+import { APPOINTMENTS_TABLE_NAME } from './1600388380111-CreateAppointments';
+import { USERS_TABLE_NAME } from './1600391794490-CreateUsers';
 
-const appointmentTableForeignKeyName = 'AppointmentProvider';
+const APPOINTMENT_TABLE_FOREIGN_KEY_NAME = 'AppointmentProvider';
 
 export default class AlterProviderFieldToProviderId1600814919838
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.changeColumn(
-      appointmentsTableName,
+      APPOINTMENTS_TABLE_NAME,
       'provider',
       new TableColumn({
         name: 'provider_id',
@@ -23,12 +23,12 @@ export default class AlterProviderFieldToProviderId1600814919838
     );
 
     await queryRunner.createForeignKey(
-      appointmentsTableName,
+      APPOINTMENTS_TABLE_NAME,
       new TableForeignKey({
-        name: appointmentTableForeignKeyName,
+        name: APPOINTMENT_TABLE_FOREIGN_KEY_NAME,
         columnNames: ['provider_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: usersTableName,
+        referencedTableName: USERS_TABLE_NAME,
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -37,12 +37,12 @@ export default class AlterProviderFieldToProviderId1600814919838
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey(
-      appointmentsTableName,
-      appointmentTableForeignKeyName,
+      APPOINTMENTS_TABLE_NAME,
+      APPOINTMENT_TABLE_FOREIGN_KEY_NAME,
     );
 
     await queryRunner.changeColumn(
-      appointmentsTableName,
+      APPOINTMENTS_TABLE_NAME,
       'provider_id',
       new TableColumn({
         name: 'provider',

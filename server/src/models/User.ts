@@ -7,9 +7,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { usersTableName } from '../database/migrations/1600391794490-CreateUsers';
+import { USERS_TABLE_NAME } from '../database/migrations/1600391794490-CreateUsers';
 
-@Entity(usersTableName)
+@Entity(USERS_TABLE_NAME)
 class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
