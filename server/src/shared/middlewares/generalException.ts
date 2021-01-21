@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { ExpressErrorMiddleware } from '../@types/middleware';
+import { ExpressErrorMiddleware } from '../../@types/middleware';
 import AppException from '../exceptions/AppException';
 
 const generalException: ExpressErrorMiddleware = (

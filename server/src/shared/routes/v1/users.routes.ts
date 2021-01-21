@@ -1,10 +1,10 @@
 import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '../../config/upload-config';
+import uploadConfig from '../../../config/upload-config';
 import ensureAuthentication from '../../middlewares/ensureAuthentication';
-import CreateUserService from '../../services/CreateUserService';
-import UpdateUserAvatarService from '../../services/UpdateUserAvatarService';
+import CreateUserService from '../../../modules/users/services/CreateUserService';
+import UpdateUserAvatarService from '../../../modules/users/services/UpdateUserAvatarService';
 
 const routes = Router();
 const upload = multer(uploadConfig);

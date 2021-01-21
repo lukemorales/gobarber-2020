@@ -1,9 +1,9 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import { StatusCodes } from 'http-status-codes';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
-import AppException from '../exceptions/AppException';
-import BaseService from '../common/base.services';
+import AppointmentsRepository from '../../appointments/repositories/AppointmentsRepository';
+import AppException from '../../../shared/exceptions/AppException';
+import BaseService from '../../../shared/services/Base';
 
 interface Request {
   provider_id: string;

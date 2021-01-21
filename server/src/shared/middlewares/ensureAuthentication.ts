@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { verify } from 'jsonwebtoken';
-import { ExpressMiddleware } from '../@types/middleware';
-import authConfig from '../config/auth-config';
+import { ExpressMiddleware } from '../../@types/middleware';
+import authConfig from '../../config/auth-config';
 import AppException from '../exceptions/AppException';
 
 interface TokenPayload {
