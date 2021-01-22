@@ -19,6 +19,7 @@
     "class-transformer": "^0.3.2",
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
+    "envalid": "6.0.2",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.1.4",
@@ -29,9 +30,9 @@
     "multer": "^1.4.2",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.4.0",
     "typeorm": "^0.2.30",
-    "uuidv4": "^6.2.6",
-    "envalid": "6.0.2"
+    "uuidv4": "^6.2.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
