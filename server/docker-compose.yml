@@ -3,11 +3,11 @@ version: "3"
 services:
 
   postgres:
-    image: postgres:12.4
+    image: kartoza/postgis:12.4
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASS: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USER}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_DBNAME: ${DB_DATABASE}
     ports:
       - ${DB_PORT}:5432
 
