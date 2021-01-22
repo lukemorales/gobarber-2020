@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
 import bodyParser from 'body-parser';
@@ -25,6 +26,7 @@ i18next
     preload: ['pt-BR', 'en'],
   });
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/files', express.static(uploadConfig.directory));

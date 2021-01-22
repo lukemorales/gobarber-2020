@@ -14,15 +14,13 @@ routes.post('/', async (request, response) => {
 
   const createUser = new CreateUserService(request.t);
 
-  const user = await createUser.execute({
+  const { user, token } = await createUser.execute({
     name,
     email,
     password,
   });
 
-  response.json();
-
-  return response.json(classToPlain(user));
+  return response.json(classToPlain({ user, token }));
 });
 
 routes.patch(

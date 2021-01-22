@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import UsersRepository from '../repositories/UsersRepository';
 import AppException from '../exceptions/AppException';
 import BaseService from '../common/base.services';
+import AuthenticateUserService from './AuthenticateUserService';
 
 interface Request {
   name: string;
@@ -35,7 +36,9 @@ class CreateUserService extends BaseService {
 
     await usersRepository.save(user);
 
-    return user;
+    const token = AuthenticateUserService.generateToken(user.id);
+
+    return { user, token };
   }
 }
 

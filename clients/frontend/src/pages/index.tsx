@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { FormEvent } from 'react';
 import Image from 'next/image';
 import { getBlurhash } from 'next-blurhash';
 import { GetStaticProps } from 'next';
@@ -7,18 +6,35 @@ import { GetStaticProps } from 'next';
 import { BlurhashCanvas } from 'react-blurhash';
 import { useTheme } from 'styled-components';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
-
-import * as S from './_styles';
-import GoBarberLogo from '../../public/gobarber_logo.svg';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import MetaTags from '~/components/MetaTags';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import useAuth from '~/contexts/auth';
+import {
+  AUTH_CONTAINER_ANIMATION,
+  AUTH_HERO_ANIMATION,
+  AUTH_MAIN_ANIMATION,
+} from '~/constants/animations';
+import { SignInCredentials } from '~/contexts/auth/types';
+
+import GoBarberLogo from '../../public/gobarber_logo.svg';
+import * as S from './_styles';
 
 type LoginProps = {
   imgHash: string;
   imgSrc: string;
 };
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .required('Preencha seu email')
+    .email('Digite um e-mail válido'),
+  password: Yup.string().min(6, 'Preencha sua senha'),
+});
 
 export const getStaticProps: GetStaticProps = async () => {
   const imgSrc = '/bg_login.png';
@@ -34,37 +50,50 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Login = ({ imgHash, imgSrc }: LoginProps) => {
   const { colors } = useTheme();
+  const { handleSignIn, isLoading } = useAuth();
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
+  const formMethods = useForm<SignInCredentials>({
+    resolver: yupResolver(schema),
+  });
+  const { handleSubmit } = formMethods;
 
   return (
-    <S.Container>
+    <S.Container {...AUTH_CONTAINER_ANIMATION}>
       <MetaTags title="Login" />
 
-      <main>
+      <S.AnimatedMain {...AUTH_MAIN_ANIMATION('right')}>
         <header>
           <h1>
             <GoBarberLogo />
           </h1>
         </header>
 
-        <S.Form onSubmit={handleSubmit}>
-          <strong>Faça seu login</strong>
+        <FormProvider {...formMethods}>
+          <S.Form onSubmit={handleSubmit(handleSignIn)}>
+            <strong>Faça seu login</strong>
 
-          <Input name="email" type="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            type="password"
-            icon={FiLock}
-            placeholder="Senha"
-          />
+            <Input
+              name="email"
+              type="email"
+              icon={FiMail}
+              placeholder="E-mail"
+              required
+            />
+            <Input
+              name="password"
+              type="password"
+              icon={FiLock}
+              placeholder="Senha"
+              required
+            />
 
-          <Button type="submit">Entrar</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Entrar
+            </Button>
 
-          <span>Esqueceu sua senha?</span>
-        </S.Form>
+            <span>Esqueceu sua senha?</span>
+          </S.Form>
+        </FormProvider>
 
         <footer>
           <Link href="/sign-up">
@@ -73,9 +102,9 @@ const Login = ({ imgHash, imgSrc }: LoginProps) => {
             </a>
           </Link>
         </footer>
-      </main>
+      </S.AnimatedMain>
 
-      <S.ImageWrapper>
+      <S.ImageWrapper {...AUTH_HERO_ANIMATION('right')}>
         <BlurhashCanvas
           hash={imgHash}
           // getBlurhash **always** returns 32×32 dimensions

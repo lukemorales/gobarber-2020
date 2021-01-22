@@ -8,10 +8,10 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { appointmentsTableName } from '../database/migrations/1600388380111-CreateAppointments';
+import { APPOINTMENTS_TABLE_NAME } from '../database/migrations/1600388380111-CreateAppointments';
 import User from './User';
 
-@Entity(appointmentsTableName)
+@Entity(APPOINTMENTS_TABLE_NAME)
 class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
