@@ -6,11 +6,14 @@ Você pode ler também em [inglês](./README.md).
 
 Há algumas etapas para poder configurar o banco de dados nessa API, primeiro, certifique-se de ter instalado:
 
-- Docker
-- Docker Compose
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-Primeiro, crie um arquivo chamado `.env`, ele irá configurar algumas coisas do banco de dados e da API,
-e depois copie o conteúdo do arquivo `env-pr-BR.example` para dentro do `.env`.
+Primeiro, crie um arquivo chamado `.env` com o seguinte comando:
+
+```bash
+cp .env.example .env
+```
 
 Após isso, use o comando a seguir para inicializar o banco de dados:
 

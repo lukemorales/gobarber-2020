@@ -6,11 +6,14 @@ You can also read in [portuguese](./README-pt-BR.md).
 
 There are a few steps to be able to configure the database in this API, first make sure you have installed it:
 
-- Docker
-- Docker Compose
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-First, create a file called `.env`, it will configure some things in the database and the API,
-and then copy the contents of the `env.example` file into the `.env`.
+First, create a file called `.env` with the following command:
+
+```bash
+cp .env.example .env
+```
 
 After that, use the following command to initialize the database:
 
