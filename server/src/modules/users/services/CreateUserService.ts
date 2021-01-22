@@ -1,9 +1,9 @@
 import { hash } from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
+import { injectable, inject } from 'tsyringe';
 
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
-import { TFunction } from '~/@types/i18next.overrides';
 
 import AuthenticateUserService from './AuthenticateUserService';
 import UserRepository from '../repositories/UserRepository';
@@ -14,9 +14,13 @@ interface Request {
   password: string;
 }
 
+@injectable()
 class CreateUserService extends BaseService {
-  constructor(private usersRepository: UserRepository, t: TFunction) {
-    super(t);
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: UserRepository,
+  ) {
+    super();
   }
 
   public async execute(data: Request) {

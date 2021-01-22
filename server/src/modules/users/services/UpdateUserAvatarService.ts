@@ -1,11 +1,11 @@
 import path from 'path';
 import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
+import { injectable, inject } from 'tsyringe';
 
 import uploadConfig from '@config/upload-config';
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
-import { TFunction } from '~/@types/i18next.overrides';
 
 import UserRepository from '../repositories/UserRepository';
 
@@ -14,9 +14,13 @@ interface Request {
   filename: string;
 }
 
+@injectable()
 class UpdateUserAvatarService extends BaseService {
-  constructor(private usersRepository: UserRepository, t: TFunction) {
-    super(t);
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: UserRepository,
+  ) {
+    super();
   }
 
   public async execute({ user_id, filename }: Request) {

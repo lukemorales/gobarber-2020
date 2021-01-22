@@ -11,6 +11,7 @@ import i18next from 'i18next';
 import uploadConfig from '@config/upload-config';
 
 import '../typeorm';
+import '@shared/container';
 import routes from './routes';
 import generalException from './middlewares/generalException';
 

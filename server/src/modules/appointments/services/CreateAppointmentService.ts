@@ -1,9 +1,9 @@
 import { startOfHour } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
+import { injectable, inject } from 'tsyringe';
 
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
-import { TFunction } from '~/@types/i18next.overrides';
 
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
@@ -12,12 +12,13 @@ interface Request {
   date: Date;
 }
 
+@injectable()
 class CreateAppointmentService extends BaseService {
   constructor(
+    @inject('AppointmentsRepository')
     private appointmentsRepository: AppointmentRepository,
-    t: TFunction,
   ) {
-    super(t);
+    super();
   }
 
   public async execute(data: Request) {

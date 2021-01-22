@@ -1,11 +1,11 @@
 import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
 import multer from 'multer';
+import { container } from 'tsyringe';
 
 import uploadConfig from '@config/upload-config';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import ensureAuthentication from '@modules/users/infra/http/middlewares/ensureAuthentication';
 
 const routes = Router();
@@ -14,8 +14,8 @@ const upload = multer(uploadConfig);
 routes.post('/', async (request, response) => {
   const { name, email, password } = request.body;
 
-  const usersRepository = new UsersRepository();
-  const createUser = new CreateUserService(usersRepository, request.t);
+  const createUser = container.resolve(CreateUserService);
+  createUser.setTranslateFunction(request.t);
 
   const { user, token } = await createUser.execute({
     name,
@@ -33,11 +33,8 @@ routes.patch(
   async (request, response) => {
     const { user, file } = request;
 
-    const usersRepository = new UsersRepository();
-    const updateUserAvatar = new UpdateUserAvatarService(
-      usersRepository,
-      request.t,
-    );
+    const updateUserAvatar = container.resolve(UpdateUserAvatarService);
+    updateUserAvatar.setTranslateFunction(request.t);
 
     const updatedUser = await updateUserAvatar.execute({
       user_id: user.id,
