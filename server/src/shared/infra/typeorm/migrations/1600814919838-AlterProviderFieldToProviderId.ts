@@ -4,6 +4,7 @@ import {
   TableColumn,
   TableForeignKey,
 } from 'typeorm';
+
 import { APPOINTMENTS_TABLE_NAME } from './1600388380111-CreateAppointments';
 import { USERS_TABLE_NAME } from './1600391794490-CreateUsers';
 

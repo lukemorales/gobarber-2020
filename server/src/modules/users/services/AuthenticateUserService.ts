@@ -2,10 +2,12 @@ import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
-import UsersRepository from '../../users/repositories/UsersRepository';
-import AUTH_CONFIG from '../../../config/auth-config';
-import AppException from '../../../shared/exceptions/AppException';
-import BaseService from '../../../shared/services/Base';
+
+import AUTH_CONFIG from '@config/auth-config';
+import AppException from '@shared/exceptions/AppException';
+import BaseService from '@shared/services/Base';
+
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
   email: string;

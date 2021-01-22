@@ -24,7 +24,8 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "import-helpers"
   ],
   "settings": {
     "import/resolver": {
@@ -54,6 +55,18 @@
       "error",
       {
         "devDependencies": true
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          ["/^~/", "/^@config/", "/^@shared/", "/^@modules/"],
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "ignore", "ignoreCase": true }
       }
     ]
   }

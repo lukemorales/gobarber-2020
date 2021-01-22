@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { USERS_TABLE_NAME } from '../../../../../shared/infra/typeorm/migrations/1600391794490-CreateUsers';
+import { USERS_TABLE_NAME } from '@shared/infra/typeorm/migrations/1600391794490-CreateUsers';
 
 @Entity(USERS_TABLE_NAME)
 class User {

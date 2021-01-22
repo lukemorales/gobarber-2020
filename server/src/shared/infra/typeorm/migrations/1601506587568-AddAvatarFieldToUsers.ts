@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
+
 import { USERS_TABLE_NAME } from './1600391794490-CreateUsers';
 
 export default class AddAvatarFieldToUsers1601506587568

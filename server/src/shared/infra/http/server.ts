@@ -8,9 +8,10 @@ import i18nextMiddleware from 'i18next-http-middleware';
 import Backend from 'i18next-node-fs-backend';
 import i18next from 'i18next';
 
-import routes from './routes';
+import uploadConfig from '@config/upload-config';
+
 import '../typeorm';
-import uploadConfig from '../../../config/upload-config';
+import routes from './routes';
 import generalException from './middlewares/generalException';
 
 const app = express();
@@ -20,7 +21,7 @@ i18next
   .use(i18nextMiddleware.LanguageDetector)
   .init({
     backend: {
-      loadPath: `${__dirname}/resources/locales/{{lng}}/{{ns}}.json`,
+      loadPath: `${__dirname}/../../resources/locales/{{lng}}/{{ns}}.json`,
     },
     fallbackLng: 'en',
     preload: ['pt-BR', 'en'],

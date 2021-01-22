@@ -1,10 +1,12 @@
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
+
+import AppException from '@shared/exceptions/AppException';
+import BaseService from '@shared/services/Base';
+
 import UsersRepository from '../repositories/UsersRepository';
-import AppException from '../../../shared/exceptions/AppException';
-import BaseService from '../../../shared/services/Base';
-import AuthenticateUserService from '../../appointments/services/AuthenticateUserService';
+import AuthenticateUserService from './AuthenticateUserService';
 
 interface Request {
   name: string;

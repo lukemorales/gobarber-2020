@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
+
 import Appointment from '../infra/typeorm/entities/Appointment';
 
 @EntityRepository(Appointment)

@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+
 import { idColumn, timestampColumns } from '../utils';
 
 export const USERS_TABLE_NAME = 'users';

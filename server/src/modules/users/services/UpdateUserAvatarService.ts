@@ -2,11 +2,12 @@ import { getCustomRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
-import UsersRepository from '../repositories/UsersRepository';
-import uploadConfig from '../../../config/upload-config';
 
-import AppException from '../../../shared/exceptions/AppException';
-import BaseService from '../../../shared/services/Base';
+import uploadConfig from '@config/upload-config';
+import AppException from '@shared/exceptions/AppException';
+import BaseService from '@shared/services/Base';
+
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
   user_id: string;

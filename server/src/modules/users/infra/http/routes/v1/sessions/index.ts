@@ -1,6 +1,7 @@
 import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
-import AuthenticateUserService from '../../../../../modules/appointments/services/AuthenticateUserService';
+
+import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
 const routes = Router();
 
