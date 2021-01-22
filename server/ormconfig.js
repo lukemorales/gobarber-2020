@@ -12,6 +12,6 @@ module.exports = {
   // logger: 'advanced-console',
   migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
   cli: {
-    migrationsDir: './src/database/migrations',
+    migrationsDir: './src/shared/infra/typeorm/migrations',
   },
 };
