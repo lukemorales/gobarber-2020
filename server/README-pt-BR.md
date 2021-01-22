@@ -9,7 +9,7 @@ Há algumas etapas para poder configurar o banco de dados nessa API, primeiro, c
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-Primeiro, crie um arquivo chamado `.env` com o seguinte comando:
+Em seguida, crie um arquivo chamado `.env` com o seguinte comando:
 
 ```bash
 cp .env.example .env
