@@ -1,12 +1,12 @@
-import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
 
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
+import { TFunction } from '~/@types/i18next.overrides';
 
-import UsersRepository from '../repositories/UsersRepository';
 import AuthenticateUserService from './AuthenticateUserService';
+import UserRepository from '../repositories/UserRepository';
 
 interface Request {
   name: string;
@@ -15,11 +15,14 @@ interface Request {
 }
 
 class CreateUserService extends BaseService {
+  constructor(private usersRepository: UserRepository, t: TFunction) {
+    super(t);
+  }
+
   public async execute(data: Request) {
     const { name, email, password } = data;
-    const usersRepository = getCustomRepository(UsersRepository);
 
-    const userExists = await usersRepository.exists(email);
+    const userExists = await this.usersRepository.exists(email);
 
     if (userExists) {
       throw new AppException(
@@ -30,13 +33,11 @@ class CreateUserService extends BaseService {
 
     const hashedPassword = await hash(password, 8);
 
-    const user = usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: hashedPassword,
     });
-
-    await usersRepository.save(user);
 
     const token = AuthenticateUserService.generateToken(user.id);
 

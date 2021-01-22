@@ -1,4 +1,3 @@
-import { getCustomRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
@@ -6,8 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 import uploadConfig from '@config/upload-config';
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
+import { TFunction } from '~/@types/i18next.overrides';
 
-import UsersRepository from '../repositories/UsersRepository';
+import UserRepository from '../repositories/UserRepository';
 
 interface Request {
   user_id: string;
@@ -15,11 +15,12 @@ interface Request {
 }
 
 class UpdateUserAvatarService extends BaseService {
-  public async execute(data: Request) {
-    const { user_id, filename } = data;
-    const usersRepository = getCustomRepository(UsersRepository);
+  constructor(private usersRepository: UserRepository, t: TFunction) {
+    super(t);
+  }
 
-    const user = await usersRepository.findOne(user_id);
+  public async execute({ user_id, filename }: Request) {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppException(
@@ -39,7 +40,7 @@ class UpdateUserAvatarService extends BaseService {
 
     user.avatar = filename;
 
-    await usersRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
