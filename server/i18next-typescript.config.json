@@ -1,5 +1,5 @@
 {
-  "inFolder": "src/resources/locales/en",
+  "inFolder": "src/shared/resources/locales/en",
   "outFile": "src/@types/i18next.keys.ts",
   "defaultNs": "translation",
   "indent": 2,

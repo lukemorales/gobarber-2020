@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const envalid = require('envalid');
 
 const rule = {
@@ -16,7 +17,10 @@ const rule = {
 };
 
 const envFileName = '.env';
-const env = envalid.cleanEnv(process.env, rule, { dotEnvPath: envFileName, strict: true });
+const env = envalid.cleanEnv(process.env, rule, {
+  dotEnvPath: envFileName,
+  strict: true,
+});
 
 const config = {
   name: 'default',
@@ -27,14 +31,10 @@ const config = {
   migrationsRun: env.DB_MIGRATIONS_RUN,
   acquireTimeout: env.DB_TIMEOUT,
   synchronize: env.DB_SYNCHRONIZE,
-  entities: [
-    './src/models/*.ts',
-  ],
-  migrations: [
-    './src/database/migrations/*.ts'
-  ],
+  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
   cli: {
-    migrationsDir: 'src/database/migrations',
+    migrationsDir: './src/shared/infra/typeorm/migrations',
   },
 };
 
@@ -74,7 +74,9 @@ if (config.type === 'mysql') {
     type: 'sqlite',
   });
 } else {
-  throw new Error('There is no other supported database type, please change the value of DB_TYPE to mysql, postgres or sqlite.');
+  throw new Error(
+    'There is no other supported database type, please change the value of DB_TYPE to mysql, postgres or sqlite.',
+  );
 }
 
 module.exports = config;
