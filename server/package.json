@@ -12,7 +12,8 @@
     "add-migration": "npm run typeorm -- migration:generate -n",
     "types:locales:generate": "i18next-typescript generate",
     "types:locales:watch": "i18next-typescript watch",
-    "test": "jest"
+    "test": "jest --passWithNoTests",
+    "test:watch": "yarn test --watch"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
