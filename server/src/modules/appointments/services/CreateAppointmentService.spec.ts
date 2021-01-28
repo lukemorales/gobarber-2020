@@ -1,3 +1,5 @@
+import AppException from '@shared/exceptions/AppException';
+
 import FakeAppointmentRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
@@ -8,6 +10,7 @@ describe('CreateAppointmentService', () => {
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
     );
+    createAppointment.setTranslateFunction(() => 'Error');
 
     const PROVIDER_ID = '12345';
 
@@ -26,6 +29,7 @@ describe('CreateAppointmentService', () => {
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
     );
+    createAppointment.setTranslateFunction(() => 'Error');
 
     const APPOINTMENT_DATE = new Date(2020, 5, 16, 11);
 
@@ -41,6 +45,6 @@ describe('CreateAppointmentService', () => {
         date: APPOINTMENT_DATE,
         provider_id: PROVIDER_ID,
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(AppException);
   });
 });

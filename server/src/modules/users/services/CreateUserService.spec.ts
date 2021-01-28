@@ -1,3 +1,5 @@
+import AppException from '@shared/exceptions/AppException';
+
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
@@ -11,6 +13,7 @@ describe('CreateUserService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    createUser.setTranslateFunction(() => 'Error');
 
     const response = await createUser.execute({
       name: 'John Doe',
@@ -34,6 +37,8 @@ describe('CreateUserService', () => {
       fakeHashProvider,
     );
 
+    createUser.setTranslateFunction(() => 'Error');
+
     await createUser.execute({
       name: 'John Doe',
       email: 'jonhdoe@example.com',
@@ -46,6 +51,6 @@ describe('CreateUserService', () => {
         email: 'jonhdoe@example.com',
         password: '123456',
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(AppException);
   });
 });

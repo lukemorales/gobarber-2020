@@ -1,3 +1,5 @@
+import AppException from '@shared/exceptions/AppException';
+
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 import AuthenticateUserService from './AuthenticateUserService';
@@ -12,10 +14,13 @@ describe('AuthenticateUserService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    createUser.setTranslateFunction(() => 'Error');
+
     const authenticateUser = new AuthenticateUserService(
       fakeUsersRepository,
       fakeHashProvider,
     );
+    authenticateUser.setTranslateFunction(() => 'Error');
 
     const { user } = await createUser.execute({
       name: 'John Doe',
@@ -43,13 +48,14 @@ describe('AuthenticateUserService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    authenticateUser.setTranslateFunction(() => 'Error');
 
     expect(
       authenticateUser.execute({
         email: 'wrong.email@example.com',
         password: '123456',
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(AppException);
   });
 
   it('should NOT authenticate a user with wrong password', async () => {
@@ -60,10 +66,13 @@ describe('AuthenticateUserService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    createUser.setTranslateFunction(() => 'Error');
+
     const authenticateUser = new AuthenticateUserService(
       fakeUsersRepository,
       fakeHashProvider,
     );
+    authenticateUser.setTranslateFunction(() => 'Error');
 
     const { user } = await createUser.execute({
       name: 'John Doe',
@@ -76,6 +85,6 @@ describe('AuthenticateUserService', () => {
         email: user.email,
         password: 'wrong-password',
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(AppException);
   });
 });

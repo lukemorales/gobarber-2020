@@ -1,4 +1,5 @@
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
+import AppException from '@shared/exceptions/AppException';
 
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
@@ -15,10 +16,13 @@ describe('UpdateUserAvatarService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    createUser.setTranslateFunction(() => 'Error');
+
     const updateUserAvatar = new UpdateUserAvatarService(
       fakeUsersRepository,
       fakeStorageProvider,
     );
+    updateUserAvatar.setTranslateFunction(() => 'Error');
 
     const { user } = await createUser.execute({
       name: 'John Doe',
@@ -46,10 +50,13 @@ describe('UpdateUserAvatarService', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
+    createUser.setTranslateFunction(() => 'Error');
+
     const updateUserAvatar = new UpdateUserAvatarService(
       fakeUsersRepository,
       fakeStorageProvider,
     );
+    updateUserAvatar.setTranslateFunction(() => 'Error');
 
     const { user } = await createUser.execute({
       name: 'John Doe',
@@ -79,12 +86,13 @@ describe('UpdateUserAvatarService', () => {
       fakeUsersRepository,
       fakeStorageProvider,
     );
+    updateUserAvatar.setTranslateFunction(() => 'Error');
 
     expect(
       updateUserAvatar.execute({
         filename: 'new_avatar.png',
         user_id: 'wrong-id',
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(AppException);
   });
 });
