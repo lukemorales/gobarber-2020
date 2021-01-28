@@ -31,7 +31,7 @@ i18next
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use(i18nextMiddleware.handle(i18next));
 app.use(routes);
