@@ -64,7 +64,7 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          ["/^~/", "/^@config/", "/^@shared/", "/^@modules/"],
+          ["/^@config/", "/^@shared/", "/^@modules/"],
           ["parent", "sibling", "index"]
         ],
         "alphabetize": { "order": "ignore", "ignoreCase": true }
