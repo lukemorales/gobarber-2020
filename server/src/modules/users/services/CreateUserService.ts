@@ -1,4 +1,3 @@
-import { hash } from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
 
@@ -7,6 +6,7 @@ import BaseService from '@shared/services/Base';
 
 import AuthenticateUserService from './AuthenticateUserService';
 import UserRepository from '../repositories/UserRepository';
+import HashProvider from '../providers/HashProvider/models/HashProvider';
 
 interface Request {
   name: string;
@@ -19,6 +19,9 @@ class CreateUserService extends BaseService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: UserRepository,
+
+    @inject('HashProvider')
+    private hashProvider: HashProvider,
   ) {
     super();
   }
@@ -35,7 +38,7 @@ class CreateUserService extends BaseService {
       );
     }
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
