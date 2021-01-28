@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { container } from 'tsyringe';
 import { classToPlain } from 'class-transformer';
 
-import AuthenticateUserService from '~/modules/users/services/AuthenticateUserService';
+import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
 export default class SessionsController {
   public async create(request: Request, response: Response) {

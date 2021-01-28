@@ -1,4 +1,3 @@
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
@@ -8,6 +7,7 @@ import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
 
 import UserRepository from '../repositories/UserRepository';
+import HashProvider from '../providers/HashProvider/models/HashProvider';
 
 interface Request {
   email: string;
@@ -19,6 +19,9 @@ class AuthenticateUserService extends BaseService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: UserRepository,
+
+    @inject('HashProvider')
+    private hashProvider: HashProvider,
   ) {
     super();
   }
@@ -35,7 +38,10 @@ class AuthenticateUserService extends BaseService {
       );
     }
 
-    const passwordMatches = await compare(password, user.password);
+    const passwordMatches = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
 
     if (!passwordMatches) {
       throw new AppException(

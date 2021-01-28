@@ -2,7 +2,8 @@
   "env": {
     "browser": false,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "airbnb",
@@ -63,7 +64,7 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          ["/^~/", "/^@config/", "/^@shared/", "/^@modules/"],
+          ["/^@config/", "/^@shared/", "/^@modules/"],
           ["parent", "sibling", "index"]
         ],
         "alphabetize": { "order": "ignore", "ignoreCase": true }

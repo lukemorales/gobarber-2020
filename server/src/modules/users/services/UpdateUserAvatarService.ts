@@ -1,11 +1,9 @@
-import path from 'path';
-import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
 
-import uploadConfig from '@config/upload-config';
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
+import StorageProvider from '@shared/container/providers/StorageProvider/models/StorageProvider';
 
 import UserRepository from '../repositories/UserRepository';
 
@@ -19,6 +17,9 @@ class UpdateUserAvatarService extends BaseService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: UserRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: StorageProvider,
   ) {
     super();
   }
@@ -34,15 +35,12 @@ class UpdateUserAvatarService extends BaseService {
     }
 
     if (user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
-    user.avatar = filename;
+    const avatarFileName = await this.storageProvider.saveFile(filename);
+
+    user.avatar = avatarFileName;
 
     await this.usersRepository.save(user);
 

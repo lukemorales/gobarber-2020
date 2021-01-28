@@ -2,7 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import UserRepository from '@modules/users/repositories/UserRepository';
-import CreateUserDTO from '~/modules/users/dtos/CreateUserDTO';
+import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
 
 class UsersRepository implements UserRepository {
   private ormRepository: Repository<User>;
@@ -20,7 +20,9 @@ class UsersRepository implements UserRepository {
   }
 
   public async save(user: User) {
-    return this.ormRepository.save(user);
+    const updatedUser = await this.ormRepository.save(user);
+
+    return updatedUser;
   }
 
   public async findById(id: string) {
