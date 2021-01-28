@@ -20,7 +20,9 @@ class UsersRepository implements UserRepository {
   }
 
   public async save(user: User) {
-    return this.ormRepository.save(user);
+    const updatedUser = await this.ormRepository.save(user);
+
+    return updatedUser;
   }
 
   public async findById(id: string) {
