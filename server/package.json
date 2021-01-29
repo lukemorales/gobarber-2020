@@ -8,12 +8,12 @@
     "dev": "tsnd -r tsconfig-paths/register --inspect --respawn --transpile-only src/shared/infra/http/server.ts",
     "start": "node dist/server",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migration": "npm run typeorm -- migration:run",
-    "add-migration": "npm run typeorm -- migration:generate -n",
+    "typeorm:migration:run": "npm run typeorm -- migration:run",
+    "typeorm:migration:create": "npm run typeorm -- migration:generate -n",
     "types:locales:generate": "i18next-typescript generate",
     "types:locales:watch": "i18next-typescript watch",
     "test": "jest --passWithNoTests",
-    "test:watch": "yarn test --watch"
+    "test:watch": "npm run test --watch"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
