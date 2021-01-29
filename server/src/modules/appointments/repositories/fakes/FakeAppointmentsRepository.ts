@@ -30,6 +30,7 @@ class AppointmentsRepository implements AppointmentRepository {
     const appointmentExists = await this.appointments.some((appointment) =>
       isEqual(appointment.date, date),
     );
+
     return appointmentExists;
   }
 }
