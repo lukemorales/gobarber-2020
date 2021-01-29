@@ -5,5 +5,6 @@
   "incorrect_credentials": "Incorrect credentials, try again.",
   "email_already_registered": "This email is already registered.",
   "user_is_not_registered": "User is not registered.",
-  "appointment_already_booked": "This appointment is already booked."
+  "appointment_already_booked": "This appointment is already booked.",
+  "email_not_registered": "This email is not registered, verify the data you have sent."
 }
