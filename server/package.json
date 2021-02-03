@@ -32,6 +32,7 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
+    "pug": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.4.0",
     "typeorm": "^0.2.30"
@@ -47,6 +48,7 @@
     "@types/nanoid": "^2.1.0",
     "@types/node": "^14.14.22",
     "@types/nodemailer": "^6.4.0",
+    "@types/pug": "^2.0.4",
     "i18next-typescript": "^0.1.0",
     "jest": "^26.6.3",
     "nanoid": "^3.1.20",
