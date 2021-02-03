@@ -8,9 +8,9 @@ import {
   Generated,
 } from 'typeorm';
 
-import { USERS_TABLE_NAME } from '@shared/infra/typeorm/migrations/1600391794490-CreateUsers';
+import { USER_TOKENS_TABLE_NAME } from '@shared/infra/typeorm/migrations/1611885412106-CreateUserTokens';
 
-@Entity(USERS_TABLE_NAME)
+@Entity(USER_TOKENS_TABLE_NAME)
 class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -20,6 +20,7 @@ class UserToken {
   user_id: string;
 
   @Column()
+  @Generated('uuid')
   token: string;
 
   @Exclude()

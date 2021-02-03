@@ -17,6 +17,6 @@ export default class ForgotPasswordController {
       email,
     });
 
-    return response.status(StatusCodes.NO_CONTENT);
+    return response.status(StatusCodes.NO_CONTENT).json();
   }
 }
