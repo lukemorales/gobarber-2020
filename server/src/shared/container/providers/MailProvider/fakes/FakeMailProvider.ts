@@ -1,16 +1,10 @@
-import User from '@modules/users/infra/typeorm/entities/User';
-
+import MailDTO from '../dtos/MailDTO';
 import MailProvider from '../models/MailProvider';
 
-interface Mail {
-  to: Pick<User, 'name' | 'email'>;
-  subject: string;
-  body: string;
-}
 class FakeMailProvider implements MailProvider {
-  private mails: Mail[] = [];
+  private mails: MailDTO[] = [];
 
-  public async sendMail({ to, body, subject }: Mail) {
+  public async sendMail({ to, body, subject }: MailDTO) {
     await this.mails.push({ to, body, subject });
   }
 }

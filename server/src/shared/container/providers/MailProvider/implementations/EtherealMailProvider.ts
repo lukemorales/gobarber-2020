@@ -1,15 +1,8 @@
 /* eslint-disable no-console */
 import nodemailer, { Transporter } from 'nodemailer';
 
-import User from '@modules/users/infra/typeorm/entities/User';
-
 import MailProvider from '../models/MailProvider';
-
-interface Mail {
-  to: Pick<User, 'name' | 'email'>;
-  subject: string;
-  body: string;
-}
+import MailDTO from '../dtos/MailDTO';
 
 class EtherealMailProvider implements MailProvider {
   private client: Transporter;
@@ -30,7 +23,7 @@ class EtherealMailProvider implements MailProvider {
     });
   }
 
-  public async sendMail({ to, subject, body }: Mail) {
+  public async sendMail({ to, subject, body }: MailDTO) {
     const message = await this.client.sendMail({
       from: 'Team GoBarber <team@gobarber.com>',
       to: `${to.name} <${to.email}>`,
