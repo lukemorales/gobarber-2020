@@ -37,9 +37,16 @@ class SendForgotPasswordEmailService extends BaseService {
       );
     }
 
-    await this.userTokensRepository.generate(user.id);
+    const { token } = await this.userTokensRepository.generate(user.id);
 
-    await this.mailProvider.sendMail(email, 'Não esquece a senha, vagabundo');
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email,
+      },
+      subject: 'Recuperação de senha',
+      body: `Não esquece a senha, vagabundo. Use o token a seguir para resetar sua senha: ${token}`,
+    });
   }
 }
 
