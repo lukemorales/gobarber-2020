@@ -44,8 +44,14 @@ class SendForgotPasswordEmailService extends BaseService {
         name: user.name,
         email,
       },
-      subject: 'Recuperação de senha',
-      body: `Não esquece a senha, vagabundo. Use o token a seguir para resetar sua senha: ${token}`,
+      subject: '[GoBarber] Recuperação de senha',
+      templateData: {
+        template: 'Olá, #{name}! Este é o seu #{token} ',
+        variables: {
+          name: user.name,
+          token,
+        },
+      },
     });
   }
 }
