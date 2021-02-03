@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
@@ -39,6 +40,13 @@ class SendForgotPasswordEmailService extends BaseService {
 
     const { token } = await this.userTokensRepository.generate(user.id);
 
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.pug',
+    );
+
     await this.mailProvider.sendMail({
       to: {
         name: user.name,
@@ -46,10 +54,10 @@ class SendForgotPasswordEmailService extends BaseService {
       },
       subject: '[GoBarber] Recuperação de senha',
       templateData: {
-        template: 'Olá, #{name}! Este é o seu #{token} ',
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token,
+          link: `http://localhost:3000/reset-password?token=${token}`,
         },
       },
     });
