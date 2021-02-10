@@ -8,4 +8,6 @@ export type TranslationKeys =
   | 'invalid_recovery_token'
   | 'invalid_token'
   | 'missing_auth_token'
+  | 'missing_old_password'
   | 'user_is_not_registered'
+  | 'wrong_old_password'
