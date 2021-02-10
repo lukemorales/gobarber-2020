@@ -10,6 +10,7 @@ const profileController = new ProfileController();
 
 routes.use(ensureAuthentication);
 
+routes.get('/', profileController.show);
 routes.put('/', profileController.update);
 
 export default routes;

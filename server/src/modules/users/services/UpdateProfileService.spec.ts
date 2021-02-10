@@ -20,7 +20,7 @@ describe('UpdateProfileService', () => {
     updateProfile.setTranslateFunction(() => 'Error');
   });
 
-  it('should be able update the user profile', async () => {
+  it('should be able to update the user profile', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -37,7 +37,7 @@ describe('UpdateProfileService', () => {
     expect(user.email).toBe('fulanobeltrano@example.com');
   });
 
-  it('should NOT be able update the user profile if the user does not exists', async () => {
+  it('should NOT be able to update the user profile if the user does not exists', async () => {
     await expect(
       updateProfile.execute({
         user_id: 'fake-id',
@@ -64,7 +64,7 @@ describe('UpdateProfileService', () => {
     expect(user.email).toBe('johndoe@example.com');
   });
 
-  it('should NOT be able update the email if the email is already registered by another user', async () => {
+  it('should NOT be able to update the email if the email is already registered by another user', async () => {
     const [user] = await Promise.all([
       fakeUsersRepository.create({
         name: 'John Doe',
