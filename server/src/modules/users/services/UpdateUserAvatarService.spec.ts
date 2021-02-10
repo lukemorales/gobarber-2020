@@ -6,24 +6,29 @@ import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUserService from './CreateUserService';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 
-describe('UpdateUserAvatarService', () => {
-  it('should be able to upload a new avatar for the user', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeStorageProvider = new FakeStorageProvider();
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let fakeStorageProvider: FakeStorageProvider;
+let createUser: CreateUserService;
+let updateUserAvatar: UpdateUserAvatarService;
 
-    const createUser = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
+describe('UpdateUserAvatarService', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+    fakeStorageProvider = new FakeStorageProvider();
+
+    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
     createUser.setTranslateFunction(() => 'Error');
 
-    const updateUserAvatar = new UpdateUserAvatarService(
+    updateUserAvatar = new UpdateUserAvatarService(
       fakeUsersRepository,
       fakeStorageProvider,
     );
     updateUserAvatar.setTranslateFunction(() => 'Error');
+  });
 
+  it('should be able to upload a new avatar for the user', async () => {
     const { user } = await createUser.execute({
       name: 'John Doe',
       email: 'jonhdoe@example.com',
@@ -40,23 +45,7 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('should be able to upload a new avatar for the user, replace and delete the old one', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeStorageProvider = new FakeStorageProvider();
-
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
-
-    const createUser = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-    createUser.setTranslateFunction(() => 'Error');
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageProvider,
-    );
-    updateUserAvatar.setTranslateFunction(() => 'Error');
 
     const { user } = await createUser.execute({
       name: 'John Doe',
@@ -79,16 +68,7 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('should NOT be able to upload a new avatar if the user does not exists', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeStorageProvider = new FakeStorageProvider();
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageProvider,
-    );
-    updateUserAvatar.setTranslateFunction(() => 'Error');
-
-    expect(
+    await expect(
       updateUserAvatar.execute({
         filename: 'new_avatar.png',
         user_id: 'wrong-id',

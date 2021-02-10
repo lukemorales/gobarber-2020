@@ -5,5 +5,10 @@
   "incorrect_credentials": "Credenciais incorretas, tente novamente.",
   "email_already_registered": "Este email já está registrado, tente com outro endereço.",
   "user_is_not_registered": "Usuário não cadastrado.",
-  "appointment_already_booked": "Este horário já está agendado."
+  "appointment_already_booked": "Este horário já está agendado.",
+  "email_not_registered": "Este e-mail não está registrado, verifique seus dados.",
+  "invalid_recovery_token": "Token de recuperação de senha inválido, por favor tente com outro link.",
+  "expired_token": "Token expirado, por favor tente com outro link.",
+  "missing_old_password": "Para atualizar sua senha, é necessário informar sua senha atual.",
+  "wrong_old_password": "A senha enviada não é a mesma que sua senha atual. Confira seus dados e tente novamente."
 }

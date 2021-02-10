@@ -1,8 +1,13 @@
 export type TranslationKeys =
   | 'appointment_already_booked'
   | 'email_already_registered'
+  | 'email_not_registered'
+  | 'expired_token'
   | 'incorrect_credentials'
   | 'internal_server_error'
+  | 'invalid_recovery_token'
   | 'invalid_token'
   | 'missing_auth_token'
-  | 'user_is_not_registered';
+  | 'missing_old_password'
+  | 'user_is_not_registered'
+  | 'wrong_old_password'

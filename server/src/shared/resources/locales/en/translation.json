@@ -5,5 +5,10 @@
   "incorrect_credentials": "Incorrect credentials, try again.",
   "email_already_registered": "This email is already registered.",
   "user_is_not_registered": "User is not registered.",
-  "appointment_already_booked": "This appointment is already booked."
+  "appointment_already_booked": "This appointment is already booked.",
+  "email_not_registered": "This email is not registered, verify the data you have sent.",
+  "invalid_recovery_token": "Invalid password recovery token, please try again with another link.",
+  "expired_token": "Expired token, please try again with another link.",
+  "missing_old_password": "To update your password, you need to provide your current password.",
+  "wrong_old_password": "The password you provided is not the same as your current password. Verify your data and try again."
 }
