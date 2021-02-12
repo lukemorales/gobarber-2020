@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import User from '@modules/users/infra/typeorm/entities/User';
 import UserRepository from '@modules/users/repositories/UserRepository';
 import CreateUserDTO from '@modules/users/dtos/CreateUserDTO';
+import FindAllProvidersDTO from '@modules/users/dtos/FindAllProvidersDTO';
 
 class UsersRepository implements UserRepository {
   private users: User[] = [];
@@ -39,6 +40,16 @@ class UsersRepository implements UserRepository {
     );
 
     return user;
+  }
+
+  public async findAllProviders({ excluded_user_id }: FindAllProvidersDTO) {
+    let { users } = this;
+
+    if (excluded_user_id) {
+      users = await this.users.filter((user) => user.id !== excluded_user_id);
+    }
+
+    return users;
   }
 
   public async exists(email: string) {
