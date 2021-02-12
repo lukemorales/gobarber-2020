@@ -5,6 +5,7 @@ import Appointment from '@modules/appointments/infra/typeorm/entities/Appointmen
 import AppointmentRepository from '@modules/appointments/repositories/AppointmentRepository';
 import CreateAppointmentDTO from '@modules/appointments/dtos/CreateAppointmentDTO';
 import FindByMonthAndProviderDTO from '@modules/appointments/dtos/FindByMonthAndProviderDTO';
+import FindByDayAndProviderDTO from '@modules/appointments/dtos/FindByDayAndProviderDTO';
 
 class AppointmentsRepository implements AppointmentRepository {
   private appointments: Appointment[] = [];
@@ -33,6 +34,20 @@ class AppointmentsRepository implements AppointmentRepository {
     const appointments = this.appointments.filter(
       (appointment) =>
         appointment.provider_id === provider_id &&
+        appointment.date.getMonth() + 1 === month &&
+        appointment.date.getFullYear() === year,
+    );
+
+    return appointments;
+  }
+
+  public async findByDayAndProvider(data: FindByDayAndProviderDTO) {
+    const { provider_id, day, month, year } = data;
+
+    const appointments = this.appointments.filter(
+      (appointment) =>
+        appointment.provider_id === provider_id &&
+        appointment.date.getDate() === day &&
         appointment.date.getMonth() + 1 === month &&
         appointment.date.getFullYear() === year,
     );
