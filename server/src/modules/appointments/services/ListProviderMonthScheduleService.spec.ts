@@ -46,6 +46,7 @@ describe('ListProviderMonthScheduleService', () => {
     const fakeAppointmentsPromises = workingHours.map((hour) =>
       fakeAppointmentsRepository.create({
         provider_id: provider.id,
+        costumer_id: '123456',
         date: new Date(currentYear, currentMonth, currentDay, hour, 0, 0),
       }),
     );

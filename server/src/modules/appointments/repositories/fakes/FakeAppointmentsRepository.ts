@@ -10,10 +10,17 @@ import FindByDayAndProviderDTO from '@modules/appointments/dtos/FindByDayAndProv
 class AppointmentsRepository implements AppointmentRepository {
   private appointments: Appointment[] = [];
 
-  public async create({ provider_id, date }: CreateAppointmentDTO) {
+  public async create(data: CreateAppointmentDTO) {
+    const { provider_id, costumer_id, date } = data;
+
     const appointment = new Appointment();
 
-    Object.assign(appointment, { id: nanoid(), provider_id, date });
+    Object.assign(appointment, {
+      id: nanoid(),
+      provider_id,
+      costumer_id,
+      date,
+    });
 
     this.appointments.push(appointment);
 

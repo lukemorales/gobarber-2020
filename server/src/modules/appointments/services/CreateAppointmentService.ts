@@ -9,6 +9,7 @@ import AppointmentRepository from '../repositories/AppointmentRepository';
 
 interface Request {
   provider_id: string;
+  costumer_id: string;
   date: Date;
 }
 
@@ -22,7 +23,7 @@ class CreateAppointmentService extends BaseService {
   }
 
   public async execute(data: Request) {
-    const { provider_id, date } = data;
+    const { provider_id, costumer_id, date } = data;
 
     const appointmentDate = startOfHour(date);
     const appointmentExists = await this.appointmentsRepository.exists(
@@ -38,6 +39,7 @@ class CreateAppointmentService extends BaseService {
 
     const appointment = await this.appointmentsRepository.create({
       provider_id,
+      costumer_id,
       date: appointmentDate,
     });
 
