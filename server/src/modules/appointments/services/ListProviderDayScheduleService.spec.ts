@@ -36,7 +36,7 @@ describe('ListProviderDayScheduleService', () => {
     listProviderDaySchedule.setTranslateFunction(() => 'Error');
   });
 
-  it('should be able to list the selected provider schedule for the selected month and year', async () => {
+  it('should be able to list the selected provider schedule for the selected day', async () => {
     const provider = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -58,6 +58,12 @@ describe('ListProviderDayScheduleService', () => {
 
     await Promise.all(fakeAppointmentsInEvenHoursPromises);
 
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementationOnce(() =>
+        new Date(currentYear, currentMonth, currentDay, 11).getTime(),
+      );
+
     const providerDaySchedule = await listProviderDaySchedule.execute({
       provider_id: provider.id,
       day: currentDay,
@@ -67,11 +73,16 @@ describe('ListProviderDayScheduleService', () => {
 
     expect(providerDaySchedule).toEqual(
       expect.arrayContaining<typeof providerDaySchedule[number]>([
-        { hour: workingHours[0], available: false },
-        { hour: workingHours[1], available: true },
-        { hour: workingHours[2], available: false },
-        { hour: workingHours[3], available: true },
-        { hour: workingHours[4], available: false },
+        { hour: 8, available: false },
+        { hour: 9, available: false },
+        { hour: 10, available: false },
+        { hour: 11, available: false },
+        { hour: 12, available: false },
+        { hour: 13, available: true },
+        { hour: 14, available: false },
+        { hour: 15, available: true },
+        { hour: 16, available: false },
+        { hour: 17, available: true },
       ]),
     );
   });

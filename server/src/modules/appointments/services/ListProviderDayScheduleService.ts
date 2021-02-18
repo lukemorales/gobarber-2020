@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import { getDaysInMonth } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 import BaseService from '@shared/services/Base';
 import { INITIAL_WORKING_HOUR, WORKING_HOURS } from '@shared/constants';
@@ -42,15 +42,19 @@ class ListProviderDayScheduleService extends BaseService {
       (_, index) => index + INITIAL_WORKING_HOUR,
     );
 
+    const currentDate = new Date(Date.now());
+
     const providerDaySchedule = workingHours.map<ProviderDaySchedule>(
       (hour) => {
         const appointmentInHour = appointments.find(
           ({ date }) => date.getHours() === hour,
         );
 
+        const baseDate = new Date(year, month - 1, day, hour);
+
         return {
           hour,
-          available: !appointmentInHour,
+          available: !appointmentInHour && isAfter(baseDate, currentDate),
         };
       },
     );
