@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 import { getDaysInMonth } from 'date-fns';
 
 import BaseService from '@shared/services/Base';
-import { WORKING_HOURS } from '@shared/constants';
+import { FINAL_WORKING_HOUR, WORKING_HOURS } from '@shared/constants';
 
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
@@ -42,14 +42,31 @@ class ListProviderMonthScheduleService extends BaseService {
       (_, index) => index + 1,
     );
 
+    const currentDate = new Date(Date.now());
+    const currentDay = currentDate.getDate();
+    const currentHour = currentDate.getHours();
+
+    const isWithinWorkingHours = currentHour < FINAL_WORKING_HOUR - 1;
+
     const providerSchedule = daysOfMonth.map<ProviderSchedule>((day) => {
       const appointmentsInDay = appointments.filter(
         ({ date }) => date.getDate() === day,
       );
 
+      const isSameDayAsRequest = currentDay === day;
+      const isFutureDate = day >= currentDay;
+      const hasFreeSchedule = appointmentsInDay.length < WORKING_HOURS;
+
+      if (isSameDayAsRequest) {
+        return {
+          day,
+          available: isWithinWorkingHours && isFutureDate && hasFreeSchedule,
+        };
+      }
+
       return {
         day,
-        available: appointmentsInDay.length < WORKING_HOURS,
+        available: isFutureDate && hasFreeSchedule,
       };
     });
 
