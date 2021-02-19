@@ -10,5 +10,8 @@
   "invalid_recovery_token": "Token de recuperação de senha inválido, por favor tente com outro link.",
   "expired_token": "Token expirado, por favor tente com outro link.",
   "missing_old_password": "Para atualizar sua senha, é necessário informar sua senha atual.",
-  "wrong_old_password": "A senha enviada não é a mesma que sua senha atual. Confira seus dados e tente novamente."
+  "wrong_old_password": "A senha enviada não é a mesma que sua senha atual. Confira seus dados e tente novamente.",
+  "appointment_date_has_passed": "A data do agendamento já passou, escolha uma data futura.",
+  "costumer_is_also_provider": "Você não pode agendar um serviço com você mesmo, escolha outro prestador de serviços.",
+  "appointment_out_of_working_hours": "Agendamento fora do horário de serviço."
 }

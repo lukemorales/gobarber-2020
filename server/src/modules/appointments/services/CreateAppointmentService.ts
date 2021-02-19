@@ -1,9 +1,10 @@
-import { startOfHour } from 'date-fns';
+import { isBefore, startOfHour } from 'date-fns';
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'tsyringe';
 
 import AppException from '@shared/exceptions/AppException';
 import BaseService from '@shared/services/Base';
+import { FINAL_WORKING_HOUR, INITIAL_WORKING_HOUR } from '@shared/constants';
 
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
@@ -25,7 +26,33 @@ class CreateAppointmentService extends BaseService {
   public async execute(data: Request) {
     const { provider_id, costumer_id, date } = data;
 
+    if (costumer_id === provider_id) {
+      throw new AppException(
+        this.t('costumer_is_also_provider'),
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
     const appointmentDate = startOfHour(date);
+    const appointmentHour = appointmentDate.getHours();
+
+    const isBeforeWorkingHours = appointmentHour < INITIAL_WORKING_HOUR;
+    const isAfterWorkingHours = appointmentHour >= FINAL_WORKING_HOUR;
+
+    if (isBeforeWorkingHours || isAfterWorkingHours) {
+      throw new AppException(
+        this.t('appointment_out_of_working_hours'),
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
+    if (isBefore(appointmentDate, Date.now())) {
+      throw new AppException(
+        this.t('appointment_date_has_passed'),
+        StatusCodes.BAD_REQUEST,
+      );
+    }
+
     const appointmentExists = await this.appointmentsRepository.exists(
       appointmentDate,
     );

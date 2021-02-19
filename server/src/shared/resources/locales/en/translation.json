@@ -10,5 +10,8 @@
   "invalid_recovery_token": "Invalid password recovery token, please try again with another link.",
   "expired_token": "Expired token, please try again with another link.",
   "missing_old_password": "To update your password, you need to provide your current password.",
-  "wrong_old_password": "The password you provided is not the same as your current password. Verify your data and try again."
+  "wrong_old_password": "The password you provided is not the same as your current password. Verify your data and try again.",
+  "appointment_date_has_passed": "The appointment date has passed, pick a future date.",
+  "costumer_is_also_provider": "You can't schedule an appointment with yourself, pick another service provider.",
+  "appointment_out_of_working_hours": "Appointment out of working hours."
 }

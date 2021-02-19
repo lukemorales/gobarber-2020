@@ -1,5 +1,8 @@
 export type TranslationKeys =
   | 'appointment_already_booked'
+  | 'appointment_date_has_passed'
+  | 'appointment_out_of_working_hours'
+  | 'costumer_is_also_provider'
   | 'email_already_registered'
   | 'email_not_registered'
   | 'expired_token'
@@ -10,4 +13,4 @@ export type TranslationKeys =
   | 'missing_auth_token'
   | 'missing_old_password'
   | 'user_is_not_registered'
-  | 'wrong_old_password'
+  | 'wrong_old_password';
