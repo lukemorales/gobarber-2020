@@ -1,9 +1,8 @@
 import AppException from '@shared/exceptions/AppException';
-
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import UpdateProfileService from './UpdateProfileService';
-import HashProvider from '../providers/HashProvider/models/HashProvider';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import UpdateProfileService from '@modules/users/services/UpdateProfileService';
+import HashProvider from '@modules/users/providers/HashProvider/models/HashProvider';
+import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: HashProvider;
@@ -13,6 +12,7 @@ describe('UpdateProfileService', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
+
     updateProfile = new UpdateProfileService(
       fakeUsersRepository,
       fakeHashProvider,

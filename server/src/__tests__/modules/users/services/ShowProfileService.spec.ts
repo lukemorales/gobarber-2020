@@ -1,7 +1,6 @@
 import AppException from '@shared/exceptions/AppException';
-
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import ShowProfileService from './ShowProfileService';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let showProfile: ShowProfileService;
@@ -9,6 +8,7 @@ let showProfile: ShowProfileService;
 describe('ShowProfileService', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
+
     showProfile = new ShowProfileService(fakeUsersRepository);
     showProfile.setTranslateFunction(() => 'Error');
   });

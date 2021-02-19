@@ -1,40 +1,21 @@
-import AppException from '@shared/exceptions/AppException';
+import { spyOnDateNow } from '@tests/utils';
+import {
+  BASE_DATE,
+  CURRENT_DAY,
+  CURRENT_MONTH,
+  CURRENT_YEAR,
+  PROVIDER_ID,
+  USER_ID,
+} from '@tests/constants';
 
-import FakeAppointmentRepository from '../repositories/fakes/FakeAppointmentsRepository';
-import CreateAppointmentService from './CreateAppointmentService';
+import AppException from '@shared/exceptions/AppException';
+import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
+import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 
 let fakeAppointmentsRepository: FakeAppointmentRepository;
 let createAppointment: CreateAppointmentService;
 
-let baseDate: Date;
-let currentDay: number;
-let currentMonth: number;
-let currentYear: number;
-
-const PROVIDER_ID = 'provider-id';
-const USER_ID = 'user-id';
-
-const spyOnDateNow = (hour: number, frequency: 'every' | 'once' = 'once') =>
-  frequency === 'once'
-    ? jest
-        .spyOn(Date, 'now')
-        .mockImplementationOnce(() =>
-          new Date(currentYear, currentMonth, currentDay, hour).getTime(),
-        )
-    : jest
-        .spyOn(Date, 'now')
-        .mockImplementation(() =>
-          new Date(currentYear, currentMonth, currentDay, hour).getTime(),
-        );
-
 describe('CreateAppointmentService', () => {
-  beforeAll(() => {
-    baseDate = new Date();
-    currentDay = baseDate.getDate();
-    currentMonth = baseDate.getMonth();
-    currentYear = baseDate.getFullYear();
-  });
-
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentRepository();
 
@@ -46,9 +27,9 @@ describe('CreateAppointmentService', () => {
 
   it('should be able to create a new appointment', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY,
       11,
     );
 
@@ -67,9 +48,9 @@ describe('CreateAppointmentService', () => {
 
   it('should NOT be able to create two appointments at the same schedule with the same provider', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY,
       11,
     );
 
@@ -92,11 +73,13 @@ describe('CreateAppointmentService', () => {
 
   it('should NOT be able to create an appointment on a past date', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay,
-      baseDate.getHours() - 1,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY,
+      10,
     );
+
+    spyOnDateNow(12);
 
     await expect(
       createAppointment.execute({
@@ -109,10 +92,10 @@ describe('CreateAppointmentService', () => {
 
   it('should NOT be able to create an appointment with user being his own provider', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay,
-      baseDate.getHours() + 1,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY,
+      BASE_DATE.getHours() + 1,
     );
 
     await expect(
@@ -126,9 +109,9 @@ describe('CreateAppointmentService', () => {
 
   it('should NOT be able to create an appointment before working hours', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay + 1,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY + 1,
       7,
     );
 
@@ -143,9 +126,9 @@ describe('CreateAppointmentService', () => {
 
   it('should NOT be able to create an appointment after working hours', async () => {
     const APPOINTMENT_DATE = new Date(
-      currentYear,
-      currentMonth,
-      currentDay + 1,
+      CURRENT_YEAR,
+      CURRENT_MONTH,
+      CURRENT_DAY + 1,
       18,
     );
 

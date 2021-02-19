@@ -1,9 +1,8 @@
 import AppException from '@shared/exceptions/AppException';
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
-
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import SendForgotPasswordEmailService from './SendForgotPasswordEmailService';
-import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import SendForgotPasswordEmailService from '@modules/users/services/SendForgotPasswordEmailService';
+import FakeUserTokensRepository from '@modules/users/repositories/fakes/FakeUserTokensRepository';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
@@ -15,11 +14,13 @@ describe('SendForgotPasswordEmailService', () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeMailProvider = new FakeMailProvider();
+
     sendForgotPasswordEmail = new SendForgotPasswordEmailService(
       fakeUsersRepository,
       fakeUserTokensRepository,
       fakeMailProvider,
     );
+    sendForgotPasswordEmail.setTranslateFunction(() => 'Error');
   });
 
   it('should be able to send the recovery password email to the user', async () => {
@@ -31,8 +32,6 @@ describe('SendForgotPasswordEmailService', () => {
 
     const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
 
-    sendForgotPasswordEmail.setTranslateFunction(() => 'Error');
-
     await sendForgotPasswordEmail.execute({ email: user.email });
 
     expect(sendMail).toHaveBeenCalled();
@@ -40,8 +39,6 @@ describe('SendForgotPasswordEmailService', () => {
 
   it('should NOT be able to send the recovery password email to a user that does not exists', async () => {
     const sendMail = jest.spyOn(fakeMailProvider, 'sendMail');
-
-    sendForgotPasswordEmail.setTranslateFunction(() => 'Error');
 
     await expect(
       sendForgotPasswordEmail.execute({ email: 'wrong.email@example.com' }),
@@ -57,8 +54,6 @@ describe('SendForgotPasswordEmailService', () => {
     });
 
     const generateToken = jest.spyOn(fakeUserTokensRepository, 'generate');
-
-    sendForgotPasswordEmail.setTranslateFunction(() => 'Error');
 
     await sendForgotPasswordEmail.execute({ email: user.email });
 

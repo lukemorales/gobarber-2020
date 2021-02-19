@@ -1,10 +1,11 @@
-import AppException from '@shared/exceptions/AppException';
+import { spyOnDateNow } from '@tests/utils';
 
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import ResetPasswordService from './ResetPasswordService';
-import FakeUserTokensRepository from '../repositories/fakes/FakeUserTokensRepository';
-import HashProvider from '../providers/HashProvider/models/HashProvider';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import AppException from '@shared/exceptions/AppException';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import ResetPasswordService from '@modules/users/services/ResetPasswordService';
+import FakeUserTokensRepository from '@modules/users/repositories/fakes/FakeUserTokensRepository';
+import HashProvider from '@modules/users/providers/HashProvider/models/HashProvider';
+import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
@@ -16,6 +17,7 @@ describe('ResetPasswordService', () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeHashProvider = new FakeHashProvider();
+
     resetPassword = new ResetPasswordService(
       fakeUsersRepository,
       fakeUserTokensRepository,
@@ -68,7 +70,7 @@ describe('ResetPasswordService', () => {
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
 
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+    spyOnDateNow(() => {
       const mockedDate = new Date();
 
       return mockedDate.setHours(mockedDate.getHours() + 3);
