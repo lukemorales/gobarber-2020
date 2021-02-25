@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 import { isAfter } from 'date-fns';
 
 import BaseService from '@shared/services/Base';
-import { INITIAL_WORKING_HOUR, WORKING_HOURS } from '@shared/constants';
+import { WORKING_HOURS } from '@shared/constants';
 
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
@@ -37,14 +37,9 @@ class ListProviderDayScheduleService extends BaseService {
       },
     );
 
-    const workingHours = Array.from(
-      { length: WORKING_HOURS },
-      (_, index) => index + INITIAL_WORKING_HOUR,
-    );
-
     const currentDate = new Date(Date.now());
 
-    const providerDaySchedule = workingHours.map<ProviderDaySchedule>(
+    const providerDaySchedule = WORKING_HOURS.map<ProviderDaySchedule>(
       (hour) => {
         const appointmentInHour = appointments.find(
           ({ date }) => date.getHours() === hour,

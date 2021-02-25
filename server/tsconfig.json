@@ -9,6 +9,7 @@
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
     "paths": {
+      "@tests/*": ["__tests__/*"],
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"]
